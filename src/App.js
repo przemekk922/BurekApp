@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AdoptedAnimalsCard } from "./routes/AdoptedAnimalsCard";
 import { AdoptedAnimalsList } from "./routes/AdoptedAnimalsList";
-import { AnimalsCard } from "./routes/AnimalsCard";
+import { AddPetForm } from "./routes/AddPetForm";
 import { AnimalsList } from "./routes/AnimalsList";
 import { Calendar } from "./routes/Calendar";
 import { LoginPage } from "./routes/LoginPage";
@@ -16,7 +16,7 @@ function App() {
           <Route path="/navigation" element={<Navigation />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/animalslist" element={<AnimalsList />} />
-          <Route path="/animalscard" element={<AnimalsCard />} />
+          <Route path="/addpet" element={<AddPetForm />} />
           <Route path="/adoptedanimalslist" element={<AdoptedAnimalsList />} />
           <Route path="/adoptedanimalscard" element={<AdoptedAnimalsCard />} />
         </Routes>
