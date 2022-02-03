@@ -1,0 +1,18 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  /* justify-content: center;
+  align-items: center; */
+}
+
+/* 
+.main{
+
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 50px;
+  grid-template-areas: 
+  "animals" "calendar"
+  "adopted" "addpet";
+} */

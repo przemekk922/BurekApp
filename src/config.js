@@ -6,6 +6,7 @@ import {
 	signInWithEmailAndPassword,
 } from "firebase/auth";
 
+
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_DEV_API_KEY,
 	authDomain: "burek-f67fb.firebaseapp.com",
