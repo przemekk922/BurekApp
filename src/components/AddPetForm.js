@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useState, useRef } from "react";
 import {
   collection,
   getDocs,
@@ -8,28 +9,87 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL} from "@firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
 import { db, storage } from "../config";
-import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { TextField, Rating, Button } from "@mui/material";
+import cat from "../icons/cat.png"
+
+const StyledWrapper = styled.div`
+  display: flex;
+  margin: 150px 150px;
+`;
 
 const StyledForm = styled.form`
-  margin: 0 auto;
-  width: 300px;
+  margin: 20px;
+  width: 50%;
+  font-size: 25px;
   display: flex;
   flex-direction: column;
+  gap:20px;
+  .MuiTypography-root{
+    font-size: 20px;
+  }
+  .MuiRating-root{
+    font-size: 50px;
+  }
 `;
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff6d75",
+    fontSize: "50px",
   },
   "& .MuiRating-iconHover": {
     color: "#ff3d47",
+    fontSize: "50px",
   },
 });
+
+//zmienic na background image
+const StyledImage = styled.div`
+  width: 100%;
+  height:100%;
+  background-image: url(${props => props.src});
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  `
+
+const StyledDivImage = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border: 1px solid black;
+  border-radius: 5px;
+`;
+
+const EmptyDiv = styled.div`
+width: 100%;
+height: 100%;
+/* background-color: #c0c0c0; */
+border: 1px solid black;
+background-image: url(${cat});
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+`;
+
+const StyledUpload = styled.div`
+  width: 50%;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  gap:20px;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const StyledFormUpload = styled.form`
+display:flex;
+gap:10px;`
 
 export const AddPetForm = () => {
   const [animalData, setAnimalData] = useState({
@@ -39,10 +99,12 @@ export const AddPetForm = () => {
     species: "",
     animalBehavior: 0,
     humanBehavior: 0,
-    imageUrl: ""
+    imageUrl: "",
+    isAdopted:false,
   });
 
   const [progress, setProgress] = useState(0);
+  const formRef = useRef(null);
 
   const handleChange = (event) => {
     setAnimalData((prevFormData) => {
@@ -57,94 +119,115 @@ export const AddPetForm = () => {
     await setDoc(doc(db, "animals", animalData.id), animalData);
   };
 
-  
   const formHandler = (event) => {
     event.preventDefault();
-    const file = event.target[0].files[0];
+    const file = event.target.files[0];
     uploadFiles(file);
   };
-  
+
   const uploadFiles = (file) => {
     if (!file) return;
     const storageRef = ref(storage, `/files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-    
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          setProgress(prog);
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref)
-          .then(url => setAnimalData({
+        );
+        setProgress(prog);
+      },
+      (err) => console.log(err),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) =>
+          setAnimalData({
             ...animalData,
             imageUrl: url,
-          }))
-        }
+          })
         );
-        console.log(animalData);
-      };
+      }
+    );
+    console.log(animalData);
+  };
 
-      const handleSumbit = (event) => {
-        event.preventDefault();
-        addAnimal();
-        setAnimalData({
-          id: "",
-          name: "",
-          age: "",
-          species: "",
-          animalBehavior: 0,
-          humanBehavior: 0,
-          imageUrl: "",
-        });
-      };
-  
+  const handleSumbit = (event) => {
+    event.preventDefault();
+    addAnimal();
+    setAnimalData({
+      id: "",
+      name: "",
+      age: "",
+      species: "",
+      animalBehavior: 0,
+      humanBehavior: 0,
+      imageUrl: "",
+      isAdopted:false,
+    });
+    setProgress(0);
+    formRef.current.reset()
+  };
+
   return (
-    <>
+    <StyledWrapper>
+      <StyledUpload>
+        <StyledDivImage>
+          {animalData.imageUrl ? (
+            <StyledImage src={animalData.imageUrl} />
+          ) : (
+            <EmptyDiv></EmptyDiv>
+          )}
+        </StyledDivImage>
+        <StyledFormUpload ref={formRef}>
+          
+          <input type="file" onChange={formHandler} />
+          <h3>Uploaded {progress} %</h3>
+        </StyledFormUpload>
+        <NavLink to="/navigation">
+          <Button variant="outlined">Back</Button>
+        </NavLink>
+      </StyledUpload>
+
       <StyledForm onSubmit={handleSumbit}>
         <label htmlFor="id">Id</label>
-        <input
+        <TextField
           id="id"
           placeholder="Enter pet id"
           value={animalData.id}
           type="text"
           name="id"
           onChange={handleChange}
-        ></input>
+        ></TextField>
         <label htmlFor="name">Name</label>
-        <input
+        <TextField
           id="name"
           placeholder="Enter pet name"
           value={animalData.name}
           type="text"
           name="name"
           onChange={handleChange}
-        ></input>
+        ></TextField>
         <label htmlFor="age">Age</label>
-        <input
+        <TextField
           id="age"
           placeholder="Enter pet age"
           value={animalData.age}
           type="text"
           name="age"
           onChange={handleChange}
-        ></input>
+        ></TextField>
         <label htmlFor="species">Species</label>
-        <input
+        <TextField
           name="species"
           placeholder="Dog/Cat"
           value={animalData.species}
           type="text"
           name="species"
           onChange={handleChange}
-        ></input>
-        <Typography component="legend">
+        ></TextField>
+        <label component="legend" htmlFor="animalBehavior">
           Behavior around other animals
-        </Typography>
+        </label>
         <StyledRating
           value={Number(animalData.animalBehavior)}
           onChange={handleChange}
@@ -153,7 +236,7 @@ export const AddPetForm = () => {
           icon={<FavoriteIcon fontSize="inherit" />}
           emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
         />
-        <Typography component="legend">Behavior around humans</Typography>
+        <label component="legend" htmlFor="humanBehavior">Behavior around humans</label>
         <StyledRating
           value={Number(animalData.humanBehavior)}
           onChange={handleChange}
@@ -162,19 +245,8 @@ export const AddPetForm = () => {
           icon={<FavoriteIcon fontSize="inherit" />}
           emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
         />
-        <button type="submit">Add Pet</button>
+        <Button variant="outlined" type="submit">Add Pet</Button>
       </StyledForm>
-
-      <form onSubmit={formHandler}>
-        <input type="file" />
-        <h3>Uploaded {progress} %</h3>
-        <button type="submit">Upload</button>
-      </form>
-      <div>
-        <img src={animalData.imageUrl}/>
-      </div>
-
-      <button>Back</button>
-    </>
+    </StyledWrapper>
   );
 };
