@@ -8,7 +8,8 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../config";
+import { ref, uploadBytesResumable, getDownloadURL} from "@firebase/storage";
+import { db, storage } from "../config";
 import Rating from "@mui/material/Rating";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -38,8 +39,10 @@ export const AddPetForm = () => {
     species: "",
     animalBehavior: 0,
     humanBehavior: 0,
+    imageUrl: ""
   });
 
+  const [progress, setProgress] = useState(0);
 
   const handleChange = (event) => {
     setAnimalData((prevFormData) => {
@@ -54,18 +57,52 @@ export const AddPetForm = () => {
     await setDoc(doc(db, "animals", animalData.id), animalData);
   };
 
-  const handleSumbit = (event) => {
+  
+  const formHandler = (event) => {
     event.preventDefault();
-    addAnimal();
-    setAnimalData({
-      id: "",
-      name: "",
-      age: "",
-      species: "",
-	  animalBehavior: 0,
-	  humanBehavior: 0,
-    });
+    const file = event.target[0].files[0];
+    uploadFiles(file);
   };
+  
+  const uploadFiles = (file) => {
+    if (!file) return;
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(prog);
+        },
+        (err) => console.log(err),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+          .then(url => setAnimalData({
+            ...animalData,
+            imageUrl: url,
+          }))
+        }
+        );
+        console.log(animalData);
+      };
+
+      const handleSumbit = (event) => {
+        event.preventDefault();
+        addAnimal();
+        setAnimalData({
+          id: "",
+          name: "",
+          age: "",
+          species: "",
+          animalBehavior: 0,
+          humanBehavior: 0,
+          imageUrl: "",
+        });
+      };
+  
   return (
     <>
       <StyledForm onSubmit={handleSumbit}>
@@ -127,6 +164,15 @@ export const AddPetForm = () => {
         />
         <button type="submit">Add Pet</button>
       </StyledForm>
+
+      <form onSubmit={formHandler}>
+        <input type="file" />
+        <h3>Uploaded {progress} %</h3>
+        <button type="submit">Upload</button>
+      </form>
+      <div>
+        <img src={animalData.imageUrl}/>
+      </div>
 
       <button>Back</button>
     </>

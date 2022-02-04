@@ -66,7 +66,7 @@ export const Navigation = () => {
       <NavLink to="/adoptedanimalslist">
         <StyledAdoptedBar>Adopted</StyledAdoptedBar>
       </NavLink>
-      <NavLink to="/adoptedanimalscard">
+      <NavLink to="/addpet">
         <StyledAddPetBar>Add Pet</StyledAddPetBar>
       </NavLink>
     </StyledNavigation>
