@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, addDoc } from "firebase/firestore";
 import { PageLayout } from "../components/PageLayout.js";
 import { Main } from "../components/Main.js";
-import { Details } from "../components/AnimalDetails";
-// import { SearchBar } from "../components/SearchBar.js";
+import { AnimalDetails } from "../components/AnimalDetails";
+import { AnimalTile } from "../components/AnimalTile.js";
 import { NavLink } from "react-router-dom";
+import { CSSTransition } from 'react-transition-group';
+import 'animate.css';
 
 const AnimalListWrapper = styled.div`
   display: flex;
@@ -17,41 +19,21 @@ const AnimalListWrapper = styled.div`
   height: 100%;
 `;
 
-const AnimalListBar = styled.div`
-  display: flex;
-  width: 60%;
-  min-height: 20%;
-  border: 1px solid black;
-  justify-content: space-between;
-  margin-top: 0.5%;
-`;
+
 
 const SearchBar = styled.div`
-	/* background-color: pink;
+  /* background-color: pink;
 	width: 200px;
 	height: 20px; */
 `;
 
 
+
 export const AnimalsList = () => {
   const [animals, setAnimals] = useState([]);
   const [animalDetailId, setAnimalDetailId] = useState(null);
-  const [query,setQuery] = useState('');
-	
-  // const filterAnimal = (animals, search) => {
-	// 	if (!search) {
-	// 		return animals;
-	// 	}
-	// 	return animals.filter((animal) => {
-	// 		const animalName = animal.name.toLowerCase();
-	// 		return animalName.includes(search);
-	// 	});
-	// };
-	
-//   const { search } = window.location;
-// //   const query = new URLSearchParams(search).get("search");
-//   const query = search;
-//   const filteredAnimals = filterAnimal(animals, search);
+  const [query, setQuery] = useState("");
+
 
   const toggleDetailsList = (id) => {
     setAnimalDetailId((oldId) => (oldId === id ? null : id));
@@ -70,42 +52,56 @@ export const AnimalsList = () => {
       <Main>
         <AnimalListWrapper>
           <SearchBar>
-						<img
-							src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
-							alt="search"
-							style={{ height: "20px", width: "20px" }}
-						/>
-						<input onChange={event => setQuery(event.target.value)} placeholder="Enter animal's name"/>
-					</SearchBar>
+            <img
+              src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
+              alt="search"
+              style={{ height: "20px", width: "20px" }}
+            />
+            <input
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Enter animal's name"
+            />
+          </SearchBar>
 
-          {animals
-					.filter(animal => {
-						if(query === "") {
-							return animal;
-						} else if (animal.name.toLowerCase().includes(query.toLocaleLowerCase())) {
-							return animal
-						}
-					})
-					.map((animal) => {
-            const { id } = animal;
-            const isExpanded = animalDetailId === animal.id;
-            console.log(animal.id);
-            return (
-              <AnimalListBar key={animal.id}>
-                <img
-                  src={process.env.PUBLIC_URL + "/iconmonstr-cat-2-240.png"}
-                  alt="cat"
-                  style={{ height: "30px", width: "30px" }}
-                />
-                {animal.name}
-                <button onClick={() => toggleDetailsList(id)}>
-                  {!isExpanded ? "Show details" : "Hide details"}
-                </button>
+					<AnimalTile 
+						animals={animals}
+						animalDetailId={animalDetailId}
+						query={query}
+						toggleDetailsList={toggleDetailsList}
+					/>
 
-                {isExpanded && <Details animal={animal} />}
-              </AnimalListBar>
-            );
-          })}
+					
+          {/* {animals
+            .filter((animal) => {
+              if (query === "") {
+                return animal;
+              } else if (
+                animal.name.toLowerCase().includes(query.toLocaleLowerCase())
+              ) {
+                return animal;
+              }
+            })
+            .map((animal) => {
+              const { id } = animal;
+              const isExpanded = animalDetailId === animal.id;
+              console.log(animal.id);
+              return (
+								//Czy kazdy element nie powinien byc <li> ???
+								<>
+                <AnimalListBar key={animal.id}>
+                  <StyledImgBox
+                    style={{ backgroundImage: `url(${animal.imageUrl})` }}
+                  ></StyledImgBox>
+                  <p>{animal.name}</p>
+                  <button onClick={() => toggleDetailsList(id)}>
+                    {!isExpanded ? "Show details" : "Hide details"}
+                  </button>
+
+                </AnimalListBar>
+									{isExpanded && <AnimalDetails animal={animal} />}
+									</>
+              );
+            })} */}
         </AnimalListWrapper>
       </Main>
     </PageLayout>

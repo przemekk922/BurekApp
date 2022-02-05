@@ -35,7 +35,7 @@ const StyledForm = styled.form`
   .MuiRating-root{
     font-size: 50px;
   }
-`;
+`; 
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -69,10 +69,9 @@ const StyledDivImage = styled.div`
 const EmptyDiv = styled.div`
 width: 100%;
 height: 100%;
-/* background-color: #c0c0c0; */
 border: 1px solid black;
 background-image: url(${cat});
-background-size: contain;
+background-size: cover;
 background-repeat: no-repeat;
 background-position: center;
 `;
