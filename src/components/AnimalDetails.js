@@ -9,9 +9,9 @@ const StyledDetails = styled.ul`
 export const Details = ({ animal }) => {
 	const [isAdopted, setIsAdopted] = useState(false);
 
-	const addToAdopted = () => {
-		setIsAdopted((isAdopted) => isAdopted === true);
-	};
+	// const changeAdoptedStatus = async () => {
+	// 	await setDoc(doc(db, "adopted animals", animalData.id), animalData);
+	// };
 
 	return (
 		<StyledDetails key={animal.id}>
@@ -20,7 +20,8 @@ export const Details = ({ animal }) => {
 			<li>Species: {animal.species}</li>
 			<li>Behavior around other animals: {animal.animalBehavior}</li>
 			<li>Behavior around humans: {animal.humanBehavior}</li>
-			<button onClick={() => addToAdopted()}>Add to adopted</button>
+			<li>Adoption status: {animal.isAdopted ? "yes" : "no"}</li>
+			<button>Add to adopted</button>
 		</StyledDetails>
 	);
 };
