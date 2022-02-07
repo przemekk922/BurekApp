@@ -1,18 +1,10 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { fadeIn, slideInRight, slideOutRight } from "react-animations";
+import { fadeIn, slideInLeft, slideOutLeft } from "react-animations";
 import { db, storage } from "../config";
-import {
-	collection,
-	getDocs,
-	deleteDocs,
-	setDoc,
-	doc,
-	serverTimestamp,
-} from "firebase/firestore";
-import { AddPetForm } from "./AddPetForm";
+import { setDoc, doc, deleteDoc } from "firebase/firestore";
 
-const slideInRightAnimation = keyframes`${slideInRight}`;
+const slideInRightAnimation = keyframes`${slideInLeft}`;
 // const slideOutRightAnimation = keyframes`${slideOutRight}`;
 
 const StyledDetails = styled.ul`
@@ -31,9 +23,14 @@ const StyledDetails = styled.ul`
 export const AnimalDetails = ({ animal, animals, animalData }) => {
 	// const [isAdopted, setIsAdopted] = useState(false);
 
-	// const changeAdoptedStatus = async () => {
-	// 	await setDoc(doc(db, "adopted animals", animalData.id), animalData);
-	// };
+	const changeAdoptedStatus = async () => {
+		try {
+			await setDoc(doc(db, "adopted_animals", animal.id), animal);
+			await deleteDoc(doc(db, "animals", animal.id));
+		} catch (error) {
+			console.log("text:", error);
+		}
+	};
 
 	return (
 		// <StyledDetailsWrapper>
@@ -43,8 +40,7 @@ export const AnimalDetails = ({ animal, animals, animalData }) => {
 			<li>Species: {animal.species}</li>
 			<li>Behavior around other animals: {animal.animalBehavior}</li>
 			<li>Behavior around humans: {animal.humanBehavior}</li>
-			<li>Adoption status: {animal.isAdopted ? "yes" : "no"}</li>
-			<button>Add to adopted</button>
+			<button onClick={changeAdoptedStatus}>Add to adopted</button>
 		</StyledDetails>
 		// </StyledDetailsWrapper>
 	);

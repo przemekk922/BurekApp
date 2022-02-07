@@ -8,6 +8,7 @@ import { AnimalDetails } from "../components/AnimalDetails";
 import { AnimalTile } from "../components/AnimalTile.js";
 import { NavLink } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import { useLocation } from "react-router-dom";
 import "animate.css";
 
 const AnimalListWrapper = styled.div`
@@ -19,7 +20,7 @@ const AnimalListWrapper = styled.div`
 	height: 100%;
 `;
 
-const SearchBar = styled.div`
+export const SearchBar = styled.div`
 	/* background-color: pink;
 	width: 200px;
 	height: 20px; */
@@ -29,18 +30,25 @@ export const AnimalsList = () => {
 	const [animals, setAnimals] = useState([]);
 	const [animalDetailId, setAnimalDetailId] = useState(null);
 	const [query, setQuery] = useState("");
+	const { pathname } = useLocation();
 
 	const toggleDetailsList = (id) => {
 		setAnimalDetailId((oldId) => (oldId === id ? null : id));
 	};
 
+	const animalsCollectionName =
+		pathname === "/animalslist" ? "animals" : "adopted_animals";
+
 	useEffect(() => {
-		const unsub = onSnapshot(collection(db, "animals"), (snapshot) => {
-			const animalsList = snapshot.docs.map((doc) => doc.data());
-			setAnimals(animalsList);
-		});
+		const unsub = onSnapshot(
+			collection(db, animalsCollectionName),
+			(snapshot) => {
+				const animalsList = snapshot.docs.map((doc) => doc.data());
+				setAnimals(animalsList);
+			}
+		);
 		return () => unsub();
-	}, []);
+	}, [animalsCollectionName]);
 
 	return (
 		<PageLayout>
@@ -64,38 +72,6 @@ export const AnimalsList = () => {
 						query={query}
 						toggleDetailsList={toggleDetailsList}
 					/>
-
-					{/* {animals
-            .filter((animal) => {
-              if (query === "") {
-                return animal;
-              } else if (
-                animal.name.toLowerCase().includes(query.toLocaleLowerCase())
-              ) {
-                return animal;
-              }
-            })
-            .map((animal) => {
-              const { id } = animal;
-              const isExpanded = animalDetailId === animal.id;
-              console.log(animal.id);
-              return (
-								//Czy kazdy element nie powinien byc <li> ???
-								<>
-                <AnimalListBar key={animal.id}>
-                  <StyledImgBox
-                    style={{ backgroundImage: `url(${animal.imageUrl})` }}
-                  ></StyledImgBox>
-                  <p>{animal.name}</p>
-                  <button onClick={() => toggleDetailsList(id)}>
-                    {!isExpanded ? "Show details" : "Hide details"}
-                  </button>
-
-                </AnimalListBar>
-									{isExpanded && <AnimalDetails animal={animal} />}
-									</>
-              );
-            })} */}
 				</AnimalListWrapper>
 			</Main>
 		</PageLayout>
