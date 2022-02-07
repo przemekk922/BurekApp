@@ -12,13 +12,20 @@ const AdoptedListBar = styled.div`
 `;
 
 export const AdoptedAnimalsList = () => {
-	return (
-		<PageLayout>
-			<Main>
-				<AdoptedListBar>
-					<h1>Adopted Animals List</h1>
-				</AdoptedListBar>
-			</Main>
-		</PageLayout>
-	);
+	// return (
+	// 	{animals.filter((animal) => {
+
+	// 		})
+	// 		.map((animal) => {
+	// 			return (
+
+	// 	}
+
+	<PageLayout>
+		<Main>
+			<AdoptedListBar>
+				<h1>Adopted Animals List</h1>
+			</AdoptedListBar>
+		</Main>
+	</PageLayout>;
 };

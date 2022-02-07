@@ -7,71 +7,65 @@ import { Main } from "../components/Main.js";
 import { AnimalDetails } from "../components/AnimalDetails";
 import { AnimalTile } from "../components/AnimalTile.js";
 import { NavLink } from "react-router-dom";
-import { CSSTransition } from 'react-transition-group';
-import 'animate.css';
+import { CSSTransition } from "react-transition-group";
+import "animate.css";
 
 const AnimalListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	overflow: auto;
+	width: 100%;
+	height: 100%;
 `;
 
-
-
 const SearchBar = styled.div`
-  /* background-color: pink;
+	/* background-color: pink;
 	width: 200px;
 	height: 20px; */
 `;
 
-
-
 export const AnimalsList = () => {
-  const [animals, setAnimals] = useState([]);
-  const [animalDetailId, setAnimalDetailId] = useState(null);
-  const [query, setQuery] = useState("");
+	const [animals, setAnimals] = useState([]);
+	const [animalDetailId, setAnimalDetailId] = useState(null);
+	const [query, setQuery] = useState("");
 
+	const toggleDetailsList = (id) => {
+		setAnimalDetailId((oldId) => (oldId === id ? null : id));
+	};
 
-  const toggleDetailsList = (id) => {
-    setAnimalDetailId((oldId) => (oldId === id ? null : id));
-  };
+	useEffect(() => {
+		const unsub = onSnapshot(collection(db, "animals"), (snapshot) => {
+			const animalsList = snapshot.docs.map((doc) => doc.data());
+			setAnimals(animalsList);
+		});
+		return () => unsub();
+	}, []);
 
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "animals"), (snapshot) => {
-      const animalsList = snapshot.docs.map((doc) => doc.data());
-      setAnimals(animalsList);
-    });
-    return () => unsub();
-  }, []);
+	return (
+		<PageLayout>
+			<Main>
+				<AnimalListWrapper>
+					<SearchBar>
+						<img
+							src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
+							alt="search"
+							style={{ height: "20px", width: "20px" }}
+						/>
+						<input
+							onChange={(event) => setQuery(event.target.value)}
+							placeholder="Enter animal's name"
+						/>
+					</SearchBar>
 
-  return (
-    <PageLayout>
-      <Main>
-        <AnimalListWrapper>
-          <SearchBar>
-            <img
-              src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
-              alt="search"
-              style={{ height: "20px", width: "20px" }}
-            />
-            <input
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Enter animal's name"
-            />
-          </SearchBar>
-
-					<AnimalTile 
+					<AnimalTile
 						animals={animals}
 						animalDetailId={animalDetailId}
 						query={query}
 						toggleDetailsList={toggleDetailsList}
 					/>
 
-					
-          {/* {animals
+					{/* {animals
             .filter((animal) => {
               if (query === "") {
                 return animal;
@@ -102,8 +96,8 @@ export const AnimalsList = () => {
 									</>
               );
             })} */}
-        </AnimalListWrapper>
-      </Main>
-    </PageLayout>
-  );
+				</AnimalListWrapper>
+			</Main>
+		</PageLayout>
+	);
 };
