@@ -1,10 +1,13 @@
 import { AddPetForm } from "../components/AddPetForm";
+import { PageLayout } from "../components/PageLayout";
+import { Main } from "../components/Main";
 
-export const AddPetPage  = () => {
-    return ( 
-      <>
-        <AddPetForm />
-      </>
-     );
-}
- 
+export const AddPetPage = () => {
+	return (
+		<PageLayout>
+			<Main>
+				<AddPetForm />
+			</Main>
+		</PageLayout>
+	);
+};
