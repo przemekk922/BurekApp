@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AnimalTile } from "./AnimalTile";
+
 const StyledDetails = styled.ul`
 	display: flex;
 	flex-direction: column;
