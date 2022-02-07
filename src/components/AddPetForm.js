@@ -14,18 +14,20 @@ import { db, storage } from "../config";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import { TextField, Rating, Button } from "@mui/material";
+import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png"
+import { DropZone } from "./DropZone";
 
 const StyledWrapper = styled.div`
   display: flex;
-  margin: 150px 150px;
+  margin: 20px 150px;
+  overflow: hidden;
 `;
 
 const StyledForm = styled.form`
   margin: 20px;
   width: 50%;
-  font-size: 25px;
+  font-size: 20px;
   display: flex;
   flex-direction: column;
   gap:20px;
@@ -99,8 +101,10 @@ export const AddPetForm = () => {
     animalBehavior: 0,
     humanBehavior: 0,
     imageUrl: "",
-    isAdopted:false,
+    // isAdopted:false,
   });
+  const [isProper, setIsProper] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   const [progress, setProgress] = useState(0);
   const formRef = useRef(null);
@@ -113,6 +117,22 @@ export const AddPetForm = () => {
       };
     });
   };
+
+  const handleChip = (event) => {
+    setAnimalData((prevFormData) => {
+      if(event.target.value.length < 15 || event.target.value.length > 15) {
+        setIsProper(false);
+      }
+      if (event.target.value.length === 15) {
+        setIsProper(true)};
+      if (event.target.value.length > 0) {
+        setIsEditing(true)};
+      return {
+        ...prevFormData,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
 
   const addAnimal = async () => {
     await setDoc(doc(db, "animals", animalData.id), animalData);
@@ -152,6 +172,9 @@ export const AddPetForm = () => {
 
   const handleSumbit = (event) => {
     event.preventDefault();
+    if(Object.values(animalData).some(item => !!item)) {
+      alert("Fill in all fields")
+    }
     addAnimal();
     setAnimalData({
       id: "",
@@ -161,16 +184,22 @@ export const AddPetForm = () => {
       animalBehavior: 0,
       humanBehavior: 0,
       imageUrl: "",
-      isAdopted:false,
     });
     setProgress(0);
     formRef.current.reset()
   };
+  const handleBack = (event) => {
+    if(Object.values(animalData).some(item => !!item)) {
+      alert("Do you want to go back without filling the form???")
+    }
+    return event.preventDefault();
+  }
 
   return (
     <StyledWrapper>
       <StyledUpload>
         <StyledDivImage>
+          <DropZone />
           {animalData.imageUrl ? (
             <StyledImage src={animalData.imageUrl} />
           ) : (
@@ -183,20 +212,47 @@ export const AddPetForm = () => {
           <h3>Uploaded {progress} %</h3>
         </StyledFormUpload>
         <NavLink to="/navigation">
-          <Button variant="outlined">Back</Button>
+          <Button onClick={handleBack} variant="outlined">Back</Button>
         </NavLink>
       </StyledUpload>
 
       <StyledForm onSubmit={handleSumbit}>
-        <label htmlFor="id">Id</label>
+        <label htmlFor="id">Animal chip number (15 digits)</label>
+        {isEditing ?
+        (isProper ?
         <TextField
+          variant="filled"
+          focused
+          label="Filled success"  
+          color="success" 
           id="id"
-          placeholder="Enter pet id"
+          placeholder="Enter chip number"
           value={animalData.id}
           type="text"
           name="id"
-          onChange={handleChange}
+          onChange={handleChip}
         ></TextField>
+        :
+        <TextField
+          error
+          helperText="Incorrect chip number"
+          id="id"
+          placeholder="Enter chip number"
+          value={animalData.id}
+          type="text"
+          name="id"
+          onChange={handleChip}
+        ></TextField>)
+        :
+        <TextField
+          id="id"
+          placeholder="Enter chip number"
+          value={animalData.id}
+          type="text"
+          name="id"
+          onChange={handleChip}
+        ></TextField>}
+{/* //////////////////////////////////////////////////////////////////////////// */}
         <label htmlFor="name">Name</label>
         <TextField
           id="name"
