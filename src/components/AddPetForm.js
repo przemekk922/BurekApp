@@ -14,7 +14,7 @@ import { db, storage } from "../config";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import { TextField, Rating, Button } from "@mui/material";
+import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png"
 import { DropZone } from "./DropZone";
 
@@ -172,10 +172,9 @@ export const AddPetForm = () => {
 
   const handleSumbit = (event) => {
     event.preventDefault();
-    if(Object.values(animalData).every(item => item == false)) {
+    if(Object.values(animalData).some(item => !!item)) {
       alert("Fill in all fields")
     }
-    console.log(Object.values(animalData).every(item => item == false))
     addAnimal();
     setAnimalData({
       id: "",
@@ -185,13 +184,12 @@ export const AddPetForm = () => {
       animalBehavior: 0,
       humanBehavior: 0,
       imageUrl: "",
-      // isAdopted:false,  // czy jest potrzebny wgl tutaj?
     });
     setProgress(0);
     formRef.current.reset()
   };
   const handleBack = (event) => {
-    if(Object.values(animalData).every(item => item == false)) {
+    if(Object.values(animalData).some(item => !!item)) {
       alert("Do you want to go back without filling the form???")
     }
     return event.preventDefault();
