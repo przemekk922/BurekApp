@@ -3,7 +3,7 @@ import { PageLayout } from "../components/PageLayout";
 import { Main } from "../components/Main";
 import "../styles.css";
 import { NavLink } from "react-router-dom";
-import {FullCalendar} from "../components/FullCalendar";
+import { FullCalendarApp } from "../components/CalendarApp";
 
 export const Calendar = () => {
 	const StyledNavigation = styled.div`
@@ -21,10 +21,8 @@ export const Calendar = () => {
 	return (
 		<PageLayout>
 			<Main>
-				{/* <StyledNavigation>
-					<StyledCalendar></StyledCalendar>
-				</StyledNavigation> */}
-				<FullCalendar />
+				{/* <StyledNavigation>	</StyledNavigation> */}
+				<FullCalendarApp/>
 			</Main>
 			<NavLink to="/navigation">
 				<button>Back</button>
