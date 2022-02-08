@@ -3,7 +3,10 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import googleCalendarPlugin from '@fullcalendar/google-calendar';
+
+
 
 
 const StyledCalendar = styled.div`
@@ -11,13 +14,17 @@ const StyledCalendar = styled.div`
   height: 200px;
   margin: 50px auto;
 `;
+
+  const gapi = window.gapi;
   const SCOPES =
   "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar";
   const API_KEY = "AIzaSyDOd8dwFCTPMlsdtuZUqTeBnN5si2ivVrc";
   const CLIENT_ID = "760511214126-kuj6qhghrgctggpdge4b90auqrcs7id2.apps.googleusercontent.com";
+
   
 export const FullCalendarApp = () => {
   const [events, setEvents] = useState(null);
+  const callendarRef = useRef()
 
   
   useEffect(() => {
@@ -107,17 +114,47 @@ export const FullCalendarApp = () => {
       end: item.end.dateTime || item.end.date,
     }));
   };
+
+  const [eventName,setEventName] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [isInputCalendar, setIsInputCalendar] = useState(false)
+  
+  const handleClick = (e) => {
+    setEventDate(e);
+    console.log(eventDate)
+    const nameEvent = prompt("Enter event name");
+    const eventTitle = new String(nameEvent)
+    const date = new Date(eventDate + 'T00:00:00')
+    
+    callendarRef.current.getApi().addEvent({id: 2,
+      title: eventTitle,
+      start: date,
+      allDay: true}) 
+  }
   
   return (
     <StyledCalendar>
       <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        ref={callendarRef}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, googleCalendarPlugin]}
+        googleCalendarApiKey={API_KEY}
+        editable={true}
+        initialView="dayGridMonth"
         headerToolbar={{
-          center: "dayGridMonth,timeGridWeek,timeGridDay new",
+          center: "dayGridMonth,timeGridWeek,timeGridDay, new",
+        }}
+        customButtons={{
+          new: {
+            text: "new",
+            click: () => handleClick
+          },
         }}
         initialView="dayGridMonth"
         events={events}
+        dateClick={(e) => handleClick(e.dateStr) }
+        eventClick={(e) => console.log(e.event.id)}
       />
+
       {/* <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable={true}

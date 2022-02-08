@@ -178,7 +178,7 @@ export const AddPetForm = () => {
 		console.log(Object.values(animalData).every((item) => !!item))
 		if (Object.values(animalData).some((item) => !!item)) {
 			alert("Fill in all fields");
-      return;
+      // return;
 		}
 		if (isProper && Object.values(animalData).every((item) => !!item)){
 		
