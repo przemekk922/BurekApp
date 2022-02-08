@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { AnimalDetails } from "../components/AnimalDetails";
+import { useLocation } from "react-router-dom";
+import { AdoptedAnimalDetails } from "./AdoptedAnimalDetails";
 
 const AnimalListBar = styled.div`
 	display: flex;
@@ -27,6 +29,7 @@ export const AnimalTile = ({
 	query,
 	toggleDetailsList,
 }) => {
+	const pathName = useLocation().pathname;
 	return (
 		<>
 			{animals
@@ -54,13 +57,20 @@ export const AnimalTile = ({
 									{!isExpanded ? "Show details" : "Hide details"}
 								</button>
 							</AnimalListBar>
-							{isExpanded && (
-								<AnimalDetails
-									isExpanded={isExpanded}
-									animal={animal}
-									animals={animals}
-								/>
-							)}
+							{isExpanded &&
+								(pathName === "/animalslist" ? (
+									<AnimalDetails
+										isExpanded={isExpanded}
+										animal={animal}
+										animals={animals}
+									/>
+								) : (
+									<AdoptedAnimalDetails
+										isExpanded={isExpanded}
+										animal={animal}
+										animals={animals}
+									/>
+								))}
 						</>
 					);
 				})}

@@ -15,7 +15,7 @@ const StyledP = styled.p`
 `;
 export const NavBar = () => {
 	console.log(useLocation());
-	const pathName = useLocation().pathname;
+	const { pathname: pathName } = useLocation();
 
 	return (
 		<StyledNavBar>
