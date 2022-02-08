@@ -102,7 +102,6 @@ export const AddPetForm = () => {
 		animalBehavior: 0,
 		humanBehavior: 0,
 		imageUrl: "",
-		// isAdopted:false,
 	});
 	const [isProper, setIsProper] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
@@ -175,11 +174,15 @@ export const AddPetForm = () => {
 
 	const handleSumbit = (event) => {
 		event.preventDefault();
+		console.log(animalData)
+		console.log(Object.values(animalData).every((item) => !!item))
 		if (Object.values(animalData).some((item) => !!item)) {
 			alert("Fill in all fields");
-			return;
+      return;
 		}
-		addAnimal();
+		if (isProper && Object.values(animalData).every((item) => !!item)){
+		
+			addAnimal();
 		setAnimalData({
 			id: "",
 			name: "",
@@ -191,6 +194,7 @@ export const AddPetForm = () => {
 		});
 		setProgress(0);
 		formRef.current.reset();
+	}
 	};
 	const handleBack = (event) => {
 		if (Object.values(animalData).some((item) => !!item)) {
@@ -203,7 +207,7 @@ export const AddPetForm = () => {
 		<StyledWrapper>
 			<StyledUpload>
 				<StyledDivImage>
-					<DropZone />
+					{/* <DropZone /> */}
 					{animalData.imageUrl ? (
 						<StyledImage src={animalData.imageUrl} />
 					) : (
@@ -211,7 +215,7 @@ export const AddPetForm = () => {
 					)}
 				</StyledDivImage>
 				<StyledFormUpload ref={formRef}>
-					<input type="file" onChange={formHandler} />
+					<input type="file" onChange={formHandler}  required/>
 					<h3>Uploaded {progress} %</h3>
 				</StyledFormUpload>
 				<NavLink to="/navigation">
@@ -268,6 +272,7 @@ export const AddPetForm = () => {
 					type="text"
 					name="name"
 					onChange={handleChange}
+					// required
 				></TextField>
 				<label htmlFor="age">Age</label>
 				<TextField
@@ -277,6 +282,7 @@ export const AddPetForm = () => {
 					type="text"
 					name="age"
 					onChange={handleChange}
+					// required
 				></TextField>
 				<label htmlFor="species">Species</label>
 				<TextField
@@ -286,11 +292,13 @@ export const AddPetForm = () => {
 					type="text"
 					name="species"
 					onChange={handleChange}
+					// required
 				></TextField>
 				<label component="legend" htmlFor="animalBehavior">
 					Behavior around other animals
 				</label>
 				<StyledRating
+          required
 					value={Number(animalData.animalBehavior)}
 					onChange={handleChange}
 					name="animalBehavior"
@@ -302,6 +310,7 @@ export const AddPetForm = () => {
 					Behavior around humans
 				</label>
 				<StyledRating
+          required
 					value={Number(animalData.humanBehavior)}
 					onChange={handleChange}
 					name="humanBehavior"

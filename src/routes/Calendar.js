@@ -3,7 +3,7 @@ import { PageLayout } from "../components/PageLayout";
 import { Main } from "../components/Main";
 import "../styles.css";
 import { NavLink } from "react-router-dom";
-import { FullCalendarApp } from "../components/CalendarApp";
+import { FullCalendarApp } from "../components/FullCalendarApp";
 
 export const Calendar = () => {
 	const StyledNavigation = styled.div`
@@ -12,18 +12,18 @@ export const Calendar = () => {
 		flex-direction: column;
 	`;
 
-	const StyledCalendar = styled.div`
-		width: 350px;
-		height: 350px;
-		background-color: grey;
-	`;
+	// const StyledCalendar = styled.div`
+	// 	width: 350px;
+	// 	height: 350px;
+	// 	background-color: grey;
+	// `;
 
 	return (
 		<PageLayout>
-			<Main>
+
 				{/* <StyledNavigation>	</StyledNavigation> */}
 				<FullCalendarApp/>
-			</Main>
+
 			<NavLink to="/navigation">
 				<button>Back</button>
 			</NavLink>
