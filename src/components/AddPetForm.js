@@ -17,7 +17,7 @@ import {
 	serverTimestamp,
 } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
-import { db, storage } from "../config";
+import { db, db2, storage } from "../config";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -25,6 +25,7 @@ import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png";
 import { DropZone } from "./DropZone";
 import { useAllAnimals } from "../utils/useAllAnimals";
+import { useNavigate } from "react-router-dom";
 
 const StyledWrapper = styled.div`
 	display: flex;
@@ -148,7 +149,16 @@ export const AddPetForm = () => {
 		});
 	};
 
+	let navigate = useNavigate();
+
+	function returnToAnimalList(event) {
+		navigate("/animalslist", { replace: true });
+	}
+
 	const addAnimal = async () => {
+		await setDoc(doc(db, "animals", animalData.id), animalData);
+	};
+	const editAnimal = async () => {
 		await setDoc(doc(db, "animals", animalData.id), animalData);
 	};
 
@@ -187,24 +197,30 @@ export const AddPetForm = () => {
 		event.preventDefault();
 		console.log(animalData);
 		console.log(Object.values(animalData).every((item) => !!item));
-		if (isProper && Object.values(animalData).every((item) => !!item)) {
-			addAnimal();
-			setAnimalData({
-				id: "",
-				name: "",
-				age: "",
-				species: "",
-				animalBehavior: 0,
-				humanBehavior: 0,
-				imageUrl: "",
-				notes: "",
-			});
-			setProgress(0);
-			setIsEditing(false);
-			formRef.current.reset();
-		}
-		if (Object.values(animalData).some((item) => !item)) {
-			alert("Fill in all fields");
+		if (pathName === "/addpet") {
+			if (isProper && Object.values(animalData).every((item) => !!item)) {
+				addAnimal();
+				setAnimalData({
+					id: "",
+					name: "",
+					age: "",
+					species: "",
+					animalBehavior: 0,
+					humanBehavior: 0,
+					imageUrl: "",
+					notes: "",
+				});
+				setProgress(0);
+				setIsEditing(false);
+				formRef.current.reset();
+			}
+			if (Object.values(animalData).some((item) => !item)) {
+				alert("Fill in all fields");
+			}
+		} else {
+			console.log("editing");
+			editAnimal();
+			returnToAnimalList();
 		}
 	};
 	const handleBack = (event) => {
@@ -229,6 +245,11 @@ export const AddPetForm = () => {
 			id: foundAnimal.id,
 			name: foundAnimal.name,
 			age: foundAnimal.age,
+			species: foundAnimal.species,
+			animalBehavior: foundAnimal.animalBehavior,
+			humanBehavior: foundAnimal.humanBehavior,
+			imageUrl: foundAnimal.imageUrl,
+			notes: foundAnimal.notes,
 		});
 	}, [id, animals]);
 
