@@ -10,11 +10,13 @@ const StyledNavBar = styled.nav`
 	justify-content: space-around;
 `;
 const StyledP = styled.p`
-	border: ${(props) => (props.isActive ? "1px solid black" : "none")};
+	border: ${(props) =>
+		props.isActive ? "1px solid black" : "1px solid transparent"};
 	padding: 1%;
+	width: 150px;
+	height: 60px;
 `;
 export const NavBar = () => {
-	console.log(useLocation());
 	const { pathname: pathName } = useLocation();
 
 	return (
@@ -27,11 +29,11 @@ export const NavBar = () => {
 				<StyledP isActive={pathName === "/addpet"}>Add Pet</StyledP>
 			</NavLink>
 			<NavLink to="/animalslist">
-				<StyledP isActive={pathName === "/animalslist"}>Animals List</StyledP>
+				<StyledP isActive={pathName === "/animalslist"}>Animals</StyledP>
 			</NavLink>
 			<NavLink to="/adoptedanimalslist">
 				<StyledP isActive={pathName === "/adoptedanimalslist"}>
-					Adopted Animals List
+					Adopted Animals
 				</StyledP>
 			</NavLink>
 			<NavLink to="/calendar">
