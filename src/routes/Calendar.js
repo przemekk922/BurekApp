@@ -20,13 +20,10 @@ export const Calendar = () => {
 
 	return (
 		<PageLayout>
+			{/* <StyledNavigation>	</StyledNavigation> */}
+			<FullCalendarApp />
 
-				{/* <StyledNavigation>	</StyledNavigation> */}
-				<FullCalendarApp/>
-
-			<NavLink to="/navigation">
-				<button>Back</button>
-			</NavLink>
+			<NavLink to="/navigation"></NavLink>
 		</PageLayout>
 	);
 };

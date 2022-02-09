@@ -6,7 +6,7 @@ import "../styles.css";
 const StyledPageLayout = styled.div`
 	display: grid;
 	height: 100vh;
-	grid-template-rows: 0.1fr 1fr;
+	grid-template-rows: 0.1fr 0.9fr;
 	grid-template-areas:
 		"nav"
 		"main";

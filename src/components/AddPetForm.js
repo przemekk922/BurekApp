@@ -268,11 +268,6 @@ export const AddPetForm = () => {
 					<input type="file" onChange={formHandler} required />
 					<h3>Uploaded {progress} %</h3>
 				</StyledFormUpload>
-				<NavLink to="/navigation">
-					<Button onClick={handleBack} variant="outlined">
-						Back
-					</Button>
-				</NavLink>
 			</StyledUpload>
 
 			<StyledForm onSubmit={handleSumbit}>
