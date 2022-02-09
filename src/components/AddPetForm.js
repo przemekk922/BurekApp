@@ -204,9 +204,7 @@ export const AddPetForm = () => {
 			formRef.current.reset();
 		}
 		if (Object.values(animalData).some((item) => !item)) {
-			// if ()
 			alert("Fill in all fields");
-			// return;
 		}
 	};
 	const handleBack = (event) => {
