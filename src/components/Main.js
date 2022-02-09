@@ -3,8 +3,9 @@ import "../styles.css";
 
 const StyledMainContent = styled.main`
 	grid-area: main;
-	background-color: green;
+	background-color: #efefef;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 `;

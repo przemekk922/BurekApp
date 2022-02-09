@@ -7,16 +7,44 @@ import { useNavigate } from "react-router-dom";
 import "../styles.css";
 
 const StyledLoginForm = styled.form`
-	height: 90vh;
-	width: 25%;
+	height: 45.2vh;
+	width: 300px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;5
+	justify-content: center;
+
+	& input {
+		margin: 10px 0 10px 0;
+		height: 40px;
+		border-radius: 4px;
+		border: 2px solid #00875a;
+		text-indent: 20px;
+		font-family: "Short Stack", cursive;
+	}
+	& button {
+		font-family: "Short Stack", cursive;
+		height: 40px;
+		margin-top: 10px;
+		border: 2px solid #00875a;
+		border-radius: 4px;
+		background-color: lightgray;
+	}
+`;
+const StyledHeader = styled.h1`
+	margin-top: 150px;
+	font-family: "Short Stack", cursive;
+	font-family: "Amatic SC", cursive;
+	font-size: 50px;
+	color: #e06648;
+	& span {
+		color: #00875a;
+	}
 `;
 const StyledFooter = styled.footer`
 	height: 10vh;
 	width: 100%;
-	background-color: rgb(255, 52, 67);
+	background-color: #e06648;
+	background-color: coral;
 	display: flex;
 	align-items: flex-end;
 `;
@@ -40,6 +68,9 @@ export const LoginPage = () => {
 	return (
 		<>
 			<Main>
+				<StyledHeader>
+					Log into <span>BurekApp</span>
+				</StyledHeader>
 				<StyledLoginForm>
 					<input
 						type="email"
@@ -59,6 +90,7 @@ export const LoginPage = () => {
 						Login
 					</button>
 				</StyledLoginForm>
+				<img src={process.env.PUBLIC_URL + "/dogo.gif"} width="500px" />
 			</Main>
 			<StyledFooter />
 		</>

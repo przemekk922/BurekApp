@@ -31,7 +31,7 @@ export const AnimalDetails = ({ animal, animals, animalData }) => {
 
 	return (
 		<StyledDetails key={animal.id}>
-			<li>Chip number: {animal}</li>
+			<li>Chip number: {animal.id}</li>
 			<li>Name: {animal.name}</li>
 			<li>Age: {animal.age}</li>
 			<li>Species: {animal.species}</li>
