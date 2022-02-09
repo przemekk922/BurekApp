@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Footer } from "../components/Footer";
+
 import { Main } from "../components/Main";
 import { loginUserWithEmail } from "../config";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
+import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
+// import { AnimatedDoggo } from "../components/AnimatedDoggo";
 
 const StyledLoginForm = styled.form`
 	height: 45.2vh;
@@ -47,6 +49,20 @@ const StyledFooter = styled.footer`
 	background-color: coral;
 	display: flex;
 	align-items: flex-end;
+`;
+
+const StyledText = styled.span`
+	color: white;
+	z-index: 1000;
+	& a {
+		text-decoration: none;
+		color: white;
+		padding-right: 15px;
+	}
+	& a:hover {
+		/* background:#125907; */
+		box-shadow: 5px 8px 8px #125907;
+	}
 `;
 
 export const LoginPage = () => {
@@ -92,7 +108,16 @@ export const LoginPage = () => {
 				</StyledLoginForm>
 				<img src={process.env.PUBLIC_URL + "/dogo.gif"} width="500px" />
 			</Main>
-			<StyledFooter />
+			<StyledFooter>
+				<StyledText>
+					Created by:
+					<a href="/">Przemysław Kalinowski</a>
+					<a href="/">Mariusz Walusiak</a>
+					<a href="/">Aleksandra Siwczak</a>
+					<a href="/">Rafał Welzant</a>
+					<a href="/">Jan Krysztop</a>
+				</StyledText>
+			</StyledFooter>
 		</>
 	);
 };
