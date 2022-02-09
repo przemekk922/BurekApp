@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { fadeIn, slideInLeft, slideOutLeft } from "react-animations";
 import { db, storage } from "../config";
 import { setDoc, doc, deleteDoc } from "firebase/firestore";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const slideInRightAnimation = keyframes`${slideInLeft}`;
 // const slideOutRightAnimation = keyframes`${slideOutRight}`;
@@ -12,13 +13,9 @@ const StyledDetails = styled.ul`
 	flex-direction: column;
 	list-style: none;
 	z-index: 0;
-	animation: ${slideInRightAnimation} 1s;
+	position: fixed;
+	right: 0;
 `;
-// const StyledDetailsWrapper = styled.div`
-// border: 1px solid red;
-// height: 300px;
-// width:500px;
-// transition: height 3s;`
 
 export const AnimalDetails = ({ animal, animals, animalData }) => {
 	// const [isAdopted, setIsAdopted] = useState(false);
@@ -33,15 +30,23 @@ export const AnimalDetails = ({ animal, animals, animalData }) => {
 	};
 
 	return (
-		// <StyledDetailsWrapper>
 		<StyledDetails key={animal.id}>
+			<li>Chip number: {animal}</li>
 			<li>Name: {animal.name}</li>
 			<li>Age: {animal.age}</li>
 			<li>Species: {animal.species}</li>
 			<li>Behavior around other animals: {animal.animalBehavior}</li>
 			<li>Behavior around humans: {animal.humanBehavior}</li>
+			<li>Notes: {animal.notes}</li>
 			<button onClick={changeAdoptedStatus}>Add to adopted</button>
+
+			<button>
+				<NavLink to={`/editanimaldetails/${animal.id}`}>
+					Update animal details
+				</NavLink>
+			</button>
+
+			<button>Delete from list</button>
 		</StyledDetails>
-		// </StyledDetailsWrapper>
 	);
 };

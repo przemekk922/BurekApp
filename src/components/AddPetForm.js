@@ -1,6 +1,13 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useState, useRef } from "react";
+import {
+	useLocation,
+	useParams,
+	BrowserRouter,
+	Route,
+	Switch,
+	NavLink,
+} from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import {
 	collection,
 	getDocs,
@@ -102,12 +109,16 @@ export const AddPetForm = () => {
 		animalBehavior: 0,
 		humanBehavior: 0,
 		imageUrl: "",
+		notes: "",
 	});
+
 	const [isProper, setIsProper] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 
 	const [progress, setProgress] = useState(0);
 	const formRef = useRef(null);
+
+	const pathName = useLocation().pathname;
 
 	const handleChange = (event) => {
 		setAnimalData((prevFormData) => {
@@ -169,32 +180,31 @@ export const AddPetForm = () => {
 				);
 			}
 		);
-		console.log(animalData);
 	};
 
 	const handleSumbit = (event) => {
 		event.preventDefault();
-		console.log(animalData)
-		console.log(Object.values(animalData).every((item) => !!item))
+		console.log(animalData);
+		console.log(Object.values(animalData).every((item) => !!item));
 		if (Object.values(animalData).some((item) => !!item)) {
 			alert("Fill in all fields");
-      return;
+			return;
 		}
-		if (isProper && Object.values(animalData).every((item) => !!item)){
-		
+		if (isProper && Object.values(animalData).every((item) => !!item)) {
 			addAnimal();
-		setAnimalData({
-			id: "",
-			name: "",
-			age: "",
-			species: "",
-			animalBehavior: 0,
-			humanBehavior: 0,
-			imageUrl: "",
-		});
-		setProgress(0);
-		formRef.current.reset();
-	}
+			setAnimalData({
+				id: "",
+				name: "",
+				age: "",
+				species: "",
+				animalBehavior: 0,
+				humanBehavior: 0,
+				imageUrl: "",
+				notes: "",
+			});
+			setProgress(0);
+			formRef.current.reset();
+		}
 	};
 	const handleBack = (event) => {
 		if (Object.values(animalData).some((item) => !!item)) {
@@ -202,6 +212,19 @@ export const AddPetForm = () => {
 		}
 		return event.preventDefault();
 	};
+
+	const { id } = useParams();
+	console.log(animalData);
+
+	useEffect(() => {
+		if (id === animalData.id) {
+			setAnimalData({
+				id: animalData.id,
+				name: animalData.name,
+				age: animalData.age,
+			});
+		}
+	}, [id, animalData]);
 
 	return (
 		<StyledWrapper>
@@ -215,7 +238,7 @@ export const AddPetForm = () => {
 					)}
 				</StyledDivImage>
 				<StyledFormUpload ref={formRef}>
-					<input type="file" onChange={formHandler}  required/>
+					<input type="file" onChange={formHandler} required />
 					<h3>Uploaded {progress} %</h3>
 				</StyledFormUpload>
 				<NavLink to="/navigation">
@@ -294,11 +317,20 @@ export const AddPetForm = () => {
 					onChange={handleChange}
 					// required
 				></TextField>
+				<label htmlFor="notes">Notes</label>
+				<TextField
+					id="notes"
+					placeholder="Add note"
+					value={animalData.notes}
+					type="text"
+					name="notes"
+					onChange={handleChange}
+				></TextField>
 				<label component="legend" htmlFor="animalBehavior">
 					Behavior around other animals
 				</label>
 				<StyledRating
-          required
+					required
 					value={Number(animalData.animalBehavior)}
 					onChange={handleChange}
 					name="animalBehavior"
@@ -310,7 +342,7 @@ export const AddPetForm = () => {
 					Behavior around humans
 				</label>
 				<StyledRating
-          required
+					required
 					value={Number(animalData.humanBehavior)}
 					onChange={handleChange}
 					name="humanBehavior"
@@ -319,7 +351,7 @@ export const AddPetForm = () => {
 					emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
 				/>
 				<Button variant="outlined" type="submit">
-					Add Pet
+					{pathName === "/addpet" ? "Add Pet" : "Confirm editing"}
 				</Button>
 			</StyledForm>
 		</StyledWrapper>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { AddPetPage } from "./routes/AddPetPage";
 import { AnimalsList } from "./routes/AnimalsList";
 import { Calendar } from "./routes/Calendar";
@@ -16,6 +16,7 @@ function App() {
 					<Route path="/animalslist" element={<AnimalsList />} />
 					<Route path="/addpet" element={<AddPetPage />} />
 					<Route path="/adoptedanimalslist" element={<AnimalsList />} />
+					<Route path="/editanimaldetails/:id" element={<AddPetPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>
