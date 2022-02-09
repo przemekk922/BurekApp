@@ -8,6 +8,10 @@ const StyledNavBar = styled.nav`
 	display: flex;
 	flex-direction: rows;
 	justify-content: space-around;
+	align-items: center;
+	color: #e06648;
+	background-color: white;
+	border-bottom: 2px solid #00875a;
 `;
 const StyledP = styled.p`
 	border: ${(props) =>
@@ -15,6 +19,14 @@ const StyledP = styled.p`
 	padding: 1%;
 	width: 150px;
 	height: 60px;
+	text-decoration: none;
+	color: #e06648;
+	font-size: 17px;
+`;
+
+const StyledLink = styled(NavLink)`
+	diplay: flex;
+	align-items: center;
 `;
 export const NavBar = () => {
 	const { pathname: pathName } = useLocation();

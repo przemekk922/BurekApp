@@ -9,8 +9,10 @@ import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 // import { AnimatedDoggo } from "../components/AnimatedDoggo";
 
 const StyledLoginForm = styled.form`
-	height: 45.2vh;
-	width: 300px;
+	height: 90vh;
+	width: 15vw;
+	min-height: 100px;
+	min-width: 300px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -31,37 +33,48 @@ const StyledLoginForm = styled.form`
 		border-radius: 4px;
 		background-color: lightgray;
 	}
+	& img {
+		align-self: center;
+	}
 `;
 const StyledHeader = styled.h1`
-	margin-top: 150px;
-	font-family: "Short Stack", cursive;
+	margin-bottom: 7vh;
+	/* font-family: "Short Stack", cursive; */
 	font-family: "Amatic SC", cursive;
 	font-size: 50px;
 	color: #e06648;
+	align-self: center;
 	& span {
 		color: #00875a;
+		font-family: "Amatic SC", cursive;
 	}
 `;
 const StyledFooter = styled.footer`
 	height: 10vh;
 	width: 100%;
 	background-color: #e06648;
-	background-color: coral;
+	/* background-color: coral; */
 	display: flex;
-	align-items: flex-end;
+	justify-content: center;
+	align-items: center;
 `;
 
 const StyledText = styled.span`
 	color: white;
-	z-index: 1000;
+	text-indent: 1vw;
+	font-size: 1rem;
+	font-family: "Amatic SC", cursive;
+
+	/* z-index: 1; */
 	& a {
 		text-decoration: none;
 		color: white;
-		padding-right: 15px;
+		padding: 0 1vw 0 1vw;
+		font-size: 1.5rem;
+		font-family: "Amatic SC", cursive;
 	}
 	& a:hover {
-		/* background:#125907; */
-		box-shadow: 5px 8px 8px #125907;
+		color: teal;
 	}
 `;
 
@@ -84,10 +97,10 @@ export const LoginPage = () => {
 	return (
 		<>
 			<Main>
-				<StyledHeader>
-					Log into <span>BurekApp</span>
-				</StyledHeader>
 				<StyledLoginForm>
+					<StyledHeader>
+						Log into <span>BurekApp</span>
+					</StyledHeader>
 					<input
 						type="email"
 						name="email"
@@ -105,14 +118,14 @@ export const LoginPage = () => {
 					<button type="submit" onClick={handleSubmit}>
 						Login
 					</button>
+					<img src={process.env.PUBLIC_URL + "/dogo.gif"} width="600px" />
 				</StyledLoginForm>
-				<img src={process.env.PUBLIC_URL + "/dogo.gif"} width="500px" />
 			</Main>
 			<StyledFooter>
 				<StyledText>
 					Created by:
-					<a href="/">Przemysław Kalinowski</a>
-					<a href="/">Mariusz Walusiak</a>
+					<a href="https://github.com/przemekk922"> Przemysław Kalinowski</a>
+					<a href="https://github.com/MariuszWalusiak">Mariusz Walusiak</a>
 					<a href="/">Aleksandra Siwczak</a>
 					<a href="/">Rafał Welzant</a>
 					<a href="/">Jan Krysztop</a>
