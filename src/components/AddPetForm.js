@@ -24,6 +24,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png";
 import { DropZone } from "./DropZone";
+import { useAllAnimals } from "../utils/useAllAnimals";
 
 const StyledWrapper = styled.div`
 	display: flex;
@@ -186,10 +187,6 @@ export const AddPetForm = () => {
 		event.preventDefault();
 		console.log(animalData);
 		console.log(Object.values(animalData).every((item) => !!item));
-		if (Object.values(animalData).some((item) => !!item)) {
-			alert("Fill in all fields");
-			return;
-		}
 		if (isProper && Object.values(animalData).every((item) => !!item)) {
 			addAnimal();
 			setAnimalData({
@@ -203,7 +200,13 @@ export const AddPetForm = () => {
 				notes: "",
 			});
 			setProgress(0);
+			setIsEditing(false);
 			formRef.current.reset();
+		}
+		if (Object.values(animalData).some((item) => !item)) {
+			// if ()
+			alert("Fill in all fields");
+			// return;
 		}
 	};
 	const handleBack = (event) => {
@@ -214,17 +217,22 @@ export const AddPetForm = () => {
 	};
 
 	const { id } = useParams();
-	console.log(animalData);
+
+	const animals = useAllAnimals("animals");
+
+	// console.log(animalData);
 
 	useEffect(() => {
-		if (id === animalData.id) {
-			setAnimalData({
-				id: animalData.id,
-				name: animalData.name,
-				age: animalData.age,
-			});
+		const foundAnimal = animals.find((animal) => id === animal.id);
+		if (!foundAnimal) {
+			return;
 		}
-	}, [id, animalData]);
+		setAnimalData({
+			id: foundAnimal.id,
+			name: foundAnimal.name,
+			age: foundAnimal.age,
+		});
+	}, [id, animals]);
 
 	return (
 		<StyledWrapper>

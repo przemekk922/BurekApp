@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { useLocation } from "react-router-dom";
 import "animate.css";
+import { useAllAnimals } from "../utils/useAllAnimals.js";
 
 const AnimalListWrapper = styled.div`
 	display: flex;
@@ -27,7 +28,7 @@ export const SearchBar = styled.div`
 `;
 
 export const AnimalsList = () => {
-	const [animals, setAnimals] = useState([]);
+	// const [animals, setAnimals] = useState([]);
 	const [animalDetailId, setAnimalDetailId] = useState(null);
 	const [query, setQuery] = useState("");
 	const { pathname } = useLocation();
@@ -39,16 +40,17 @@ export const AnimalsList = () => {
 	const animalsCollectionName =
 		pathname === "/animalslist" ? "animals" : "adopted_animals";
 
-	useEffect(() => {
-		const unsub = onSnapshot(
-			collection(db, animalsCollectionName),
-			(snapshot) => {
-				const animalsList = snapshot.docs.map((doc) => doc.data());
-				setAnimals(animalsList);
-			}
-		);
-		return () => unsub();
-	}, [animalsCollectionName]);
+	const animals = useAllAnimals(animalsCollectionName);
+	// useEffect(() => {
+	// 	const unsub = onSnapshot(
+	// 		collection(db, animalsCollectionName),
+	// 		(snapshot) => {
+	// 			const animalsList = snapshot.docs.map((doc) => doc.data());
+	// 			setAnimals(animalsList);
+	// 		}
+	// 	);
+	// 	return () => unsub();
+	// }, [animalsCollectionName]);
 
 	return (
 		<PageLayout>
