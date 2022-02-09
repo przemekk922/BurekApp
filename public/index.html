@@ -2,22 +2,47 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
-   
-   
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-   
+    <!-- <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+      function start() {
+        // 2. Initialize the JavaScript client library.
+        gapi.client
+          .init({
+            apiKey: "AIzaSyDOd8dwFCTPMlsdtuZUqTeBnN5si2ivVrc",
+            // clientId and scope are optional if auth is not required.
+            clientId: "760511214126-kuj6qhghrgctggpdge4b90auqrcs7id2.apps.googleusercontent.com",
+            scope: "profile",
+          })
+          .then(function () {
+            // 3. Initialize and make the API request.
+            return gapi.client.request({
+              path: "https://people.googleapis.com/v1/people/me?requestMask.includeField=person.names",
+            });
+          })
+          .then(
+            function (response) {
+              console.log(response.result);
+            },
+            function (reason) {
+              console.log("Error: " + reason.result.error.message);
+            }
+          );
+      }
+      // 1. Load the JavaScript client library.
+      gapi.load("client", start);
+    </script> -->
     <title>Burek App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-  
   </body>
 </html>

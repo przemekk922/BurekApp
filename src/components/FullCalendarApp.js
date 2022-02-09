@@ -3,36 +3,39 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useRef } from "react";
+import googleCalendarPlugin from "@fullcalendar/google-calendar";
+import { nanoid } from 'nanoid'
 
 const StyledCalendar = styled.div`
   width: 80%;
   height: 200px;
   margin: 50px auto;
 `;
-  const SCOPES =
+
+const SCOPES =
   "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar";
-  const API_KEY = "AIzaSyDOd8dwFCTPMlsdtuZUqTeBnN5si2ivVrc";
-  const CLIENT_ID = "760511214126-kuj6qhghrgctggpdge4b90auqrcs7id2.apps.googleusercontent.com";
-  
+const API_KEY = "AIzaSyDOd8dwFCTPMlsdtuZUqTeBnN5si2ivVrc";
+const CLIENT_ID =
+  "760511214126-kuj6qhghrgctggpdge4b90auqrcs7id2.apps.googleusercontent.com";
+
 export const FullCalendarApp = () => {
   const [events, setEvents] = useState(null);
+  const callendarRef = useRef();
 
-  
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
     script.defer = true;
     script.src = "https://apis.google.com/js/api.js";
-    
+
     document.body.appendChild(script);
-    
+
     script.addEventListener("load", () => {
       if (window.gapi) handleClientLoad();
     });
   }, []);
-  
+
   const handleClientLoad = () => {
     window.gapi.load("client:auth2", initClient);
   };
@@ -107,17 +110,49 @@ export const FullCalendarApp = () => {
       end: item.end.dateTime || item.end.date,
     }));
   };
-  
+
+  const [eventDate, setEventDate] = useState("");
+
+  const handleClick = (e) => {
+    setEventDate(e);
+    console.log(eventDate);
+    const nameEvent = prompt("Enter event name");
+    const eventTitle = new String(nameEvent);
+    const date = new Date(eventDate + "T00:00:00");
+
+    const a = callendarRef.current
+      .getApi()
+      .addEvent({ id: nanoid(), title: eventTitle, start: date, allDay: true });
+      
+      // var request = gapi.client.calendar.events.insert({
+      //   'calendarId': 'primary',
+      //   'resource': a
+      // });
+      // request.execute(function(a) {
+      //   appendPre('Event created: ' + a.htmlLink);
+      // });
+  };
+
+
   return (
     <StyledCalendar>
       <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        headerToolbar={{
-          center: "dayGridMonth,timeGridWeek,timeGridDay new",
-        }}
+        ref={callendarRef}
+        plugins={[
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin,
+          googleCalendarPlugin,
+        ]}
+        googleCalendarApiKey={API_KEY}
+        editable={true}
+        initialView="dayGridMonth"
         initialView="dayGridMonth"
         events={events}
+        dateClick={(e) => handleClick(e.dateStr)}
+        eventClick={(e) => console.log(e.event.id)}
       />
+
       {/* <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable={true}
