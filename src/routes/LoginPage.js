@@ -6,7 +6,6 @@ import { loginUserWithEmail } from "../config";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
 import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
-// import { AnimatedDoggo } from "../components/AnimatedDoggo";
 
 const StyledLoginForm = styled.form`
 	height: 90vh;
@@ -64,6 +63,7 @@ const StyledText = styled.span`
 	text-indent: 1vw;
 	font-size: 1rem;
 	font-family: "Amatic SC", cursive;
+	font-weight: bold;
 
 	/* z-index: 1; */
 	& a {
@@ -74,7 +74,7 @@ const StyledText = styled.span`
 		font-family: "Amatic SC", cursive;
 	}
 	& a:hover {
-		color: teal;
+		color: #0f573f;
 	}
 `;
 
@@ -124,11 +124,22 @@ export const LoginPage = () => {
 			<StyledFooter>
 				<StyledText>
 					Created by:
-					<a href="https://github.com/przemekk922"> Przemysław Kalinowski</a>
-					<a href="https://github.com/MariuszWalusiak">Mariusz Walusiak</a>
-					<a href="/">Aleksandra Siwczak</a>
-					<a href="/">Rafał Welzant</a>
-					<a href="/">Jan Krysztop</a>
+					<a href="https://github.com/przemekk922" target="_blank">
+						{" "}
+						Przemysław Kalinowski
+					</a>
+					<a href="https://github.com/MariuszWalusiak" target="_blank">
+						Mariusz Walusiak
+					</a>
+					<a href="https://github.com/AleksandraSiwczak" target="_blank">
+						Aleksandra Siwczak
+					</a>
+					<a href="https://github.com/Rafal-Welzant" target="_blank">
+						Rafał Welzant
+					</a>
+					<a href="https://github.com/JanKrysztop" target="_blank">
+						Jan Krysztop
+					</a>
 				</StyledText>
 			</StyledFooter>
 		</>

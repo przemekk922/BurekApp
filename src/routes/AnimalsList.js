@@ -16,15 +16,33 @@ const AnimalListWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	/* overflow: auto; */
 	width: 100%;
 	height: 100%;
 `;
 
 export const SearchBar = styled.div`
-	/* background-color: pink;
+	width: 250px;
+	height: 40px;
+	margin: 50px auto 50px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const SearchBarInput = styled.input`
+	margin: 10px 0 10px 0;
+	height: 40px;
 	width: 200px;
-	height: 20px; */
+	border-radius: 4px;
+	border: 2px solid #00875a;
+	text-indent: 20px;
+	font-family: "Short Stack", cursive;
+	outline: none;
+	cursor: pointer;
+`;
+
+const StyledImg = styled.img`
+	margin-left: 10px;
 `;
 
 export const AnimalsList = () => {
@@ -41,30 +59,20 @@ export const AnimalsList = () => {
 		pathname === "/animalslist" ? "animals" : "adopted_animals";
 
 	const animals = useAllAnimals(animalsCollectionName);
-	// useEffect(() => {
-	// 	const unsub = onSnapshot(
-	// 		collection(db, animalsCollectionName),
-	// 		(snapshot) => {
-	// 			const animalsList = snapshot.docs.map((doc) => doc.data());
-	// 			setAnimals(animalsList);
-	// 		}
-	// 	);
-	// 	return () => unsub();
-	// }, [animalsCollectionName]);
 
 	return (
 		<PageLayout>
 			<Main>
 				<AnimalListWrapper>
 					<SearchBar>
-						<img
-							src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
-							alt="search"
-							style={{ height: "20px", width: "20px" }}
-						/>
-						<input
+						<SearchBarInput
 							onChange={(event) => setQuery(event.target.value)}
 							placeholder="Enter animal's name"
+						/>
+						<StyledImg
+							src={process.env.PUBLIC_URL + "/iconmonstr-magnifier-5-240.png"}
+							alt="search"
+							style={{ height: "30px", width: "30px" }}
 						/>
 					</SearchBar>
 

@@ -17,6 +17,7 @@ function App() {
 					<Route path="/addpet" element={<AddPetPage />} />
 					<Route path="/adoptedanimalslist" element={<AnimalsList />} />
 					<Route path="/editanimaldetails/:id" element={<AddPetPage />} />
+					<Route path="/editadeoptedanimal/:id" element={<AddPetPage />} />
 				</Routes>
 			</BrowserRouter>
 		</>

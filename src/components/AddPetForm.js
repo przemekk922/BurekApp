@@ -1,51 +1,56 @@
 import styled from "styled-components";
-import {
-	useLocation,
-	useParams,
-	BrowserRouter,
-	Route,
-	Switch,
-	NavLink,
-} from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import {
-	collection,
-	getDocs,
-	deleteDocs,
-	setDoc,
-	doc,
-	serverTimestamp,
-} from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "@firebase/storage";
-import { db, db2, storage } from "../config";
+import { db, storage } from "../config";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png";
-import { DropZone } from "./DropZone";
 import { useAllAnimals } from "../utils/useAllAnimals";
 import { useNavigate } from "react-router-dom";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 const StyledWrapper = styled.div`
 	display: flex;
-	margin: 20px 150px;
+	margin: 15px 100px;
+	/* justify-content: space-evenly; */
 	overflow: hidden;
 `;
 
 const StyledForm = styled.form`
 	margin: 20px;
-	width: 50%;
+	width: 300px;
 	font-size: 20px;
+	font-family: "Lato", sans-serif;
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 10px;
 	.MuiTypography-root {
 		font-size: 20px;
 	}
 	.MuiRating-root {
 		font-size: 50px;
 	}
+	& input {
+		/* outline: none; */
+		/* border: 2px solid #00875a; */
+		border-radius: 5px;
+		height: 5px;
+		background-color: white;
+	}
+
+	/* & button {
+		border: 2px solid #00875a;
+		border-radius: 5px;
+		height: 50px;
+	} */
+`;
+
+const StyledLabel = styled.label`
+	display: inline-block;
 `;
 
 const StyledRating = styled(Rating)({
@@ -59,28 +64,27 @@ const StyledRating = styled(Rating)({
 	},
 });
 
-//zmienic na background image
 const StyledImage = styled.div`
-	width: 100%;
-	height: 100%;
+	/* // width: 100%;
+	// height: 100%; */
 	background-image: url(${(props) => props.src});
-	background-position: center;
+	background-position: top;
 	background-size: contain;
 	background-repeat: no-repeat;
 `;
 
 const StyledDivImage = styled.div`
-	width: 100%;
-	height: 100%;
-	display: flex;
-	border: 1px solid black;
+	width: 350px;
+	height: 350px;
+	/*// display: flex;*/
+	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
 	border-radius: 5px;
 `;
 
 const EmptyDiv = styled.div`
 	width: 100%;
 	height: 100%;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	background-image: url(${cat});
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -94,7 +98,8 @@ const StyledUpload = styled.div`
 	display: flex;
 	gap: 20px;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
+	font-family: "Lato", sans-serif;
 `;
 
 const StyledFormUpload = styled.form`
@@ -152,7 +157,12 @@ export const AddPetForm = () => {
 	let navigate = useNavigate();
 
 	function returnToAnimalList(event) {
-		navigate("/animalslist", { replace: true });
+		navigate(
+			pathName.includes("/editanimaldetails")
+				? "/animalslist"
+				: "/adoptedanimalslist",
+			{ replace: true }
+		);
 	}
 
 	const addAnimal = async () => {
@@ -223,18 +233,12 @@ export const AddPetForm = () => {
 			returnToAnimalList();
 		}
 	};
-	const handleBack = (event) => {
-		if (Object.values(animalData).some((item) => !!item)) {
-			alert("Do you want to go back without filling the form???");
-		}
-		return event.preventDefault();
-	};
 
 	const { id } = useParams();
 
-	const animals = useAllAnimals("animals");
-
-	// console.log(animalData);
+	const animals = useAllAnimals(
+		pathName.includes("/editanimaldetails") ? "animals" : "adopted_animals"
+	);
 
 	useEffect(() => {
 		const foundAnimal = animals.find((animal) => id === animal.id);
@@ -257,7 +261,6 @@ export const AddPetForm = () => {
 		<StyledWrapper>
 			<StyledUpload>
 				<StyledDivImage>
-					{/* <DropZone /> */}
 					{animalData.imageUrl ? (
 						<StyledImage src={animalData.imageUrl} />
 					) : (
@@ -265,23 +268,22 @@ export const AddPetForm = () => {
 					)}
 				</StyledDivImage>
 				<StyledFormUpload ref={formRef}>
-					<input type="file" onChange={formHandler} required />
-					<h3>Uploaded {progress} %</h3>
+					<input type="file" lang="en" onChange={formHandler} required />
+					<h3 style={{ fontSize: "25px" }}>Uploaded {progress} %</h3>
 				</StyledFormUpload>
 			</StyledUpload>
 
 			<StyledForm onSubmit={handleSumbit}>
-				<label htmlFor="id">Animal chip number (15 digits)</label>
+				<StyledLabel htmlFor="id">Animal chip number (15 digits)</StyledLabel>
 				{isEditing ? (
 					isProper ? (
 						<TextField
 							variant="filled"
 							focused
-							label="Filled success"
 							color="success"
 							id="id"
 							placeholder="Enter chip number"
-							value={animalData.id}
+							value={animalData.id || ""}
 							type="text"
 							name="id"
 							onChange={handleChip}
@@ -292,7 +294,7 @@ export const AddPetForm = () => {
 							helperText="Incorrect chip number"
 							id="id"
 							placeholder="Enter chip number"
-							value={animalData.id}
+							value={animalData.id || ""}
 							type="text"
 							name="id"
 							onChange={handleChip}
@@ -302,18 +304,17 @@ export const AddPetForm = () => {
 					<TextField
 						id="id"
 						placeholder="Enter chip number"
-						value={animalData.id}
+						value={animalData.id || ""}
 						type="text"
 						name="id"
 						onChange={handleChip}
 					></TextField>
 				)}
-				{/* //////////////////////////////////////////////////////////////////////////// */}
 				<label htmlFor="name">Name</label>
 				<TextField
 					id="name"
 					placeholder="Enter pet name"
-					value={animalData.name}
+					value={animalData.name || ""}
 					type="text"
 					name="name"
 					onChange={handleChange}
@@ -323,7 +324,7 @@ export const AddPetForm = () => {
 				<TextField
 					id="age"
 					placeholder="Enter pet age"
-					value={animalData.age}
+					value={animalData.age || ""}
 					type="text"
 					name="age"
 					onChange={handleChange}
@@ -333,27 +334,30 @@ export const AddPetForm = () => {
 				<TextField
 					name="species"
 					placeholder="Dog/Cat"
-					value={animalData.species}
+					value={animalData.species || ""}
 					type="text"
 					name="species"
 					onChange={handleChange}
 					// required
 				></TextField>
 				<label htmlFor="notes">Notes</label>
-				<TextField
+				<TextareaAutosize
 					id="notes"
+					aria-label="minimum height"
+					minRows={1}
+					style={{ fontSize: "20px" }}
 					placeholder="Add note"
-					value={animalData.notes}
+					value={animalData.notes || ""}
 					type="text"
 					name="notes"
 					onChange={handleChange}
-				></TextField>
+				></TextareaAutosize>
 				<label component="legend" htmlFor="animalBehavior">
 					Behavior around other animals
 				</label>
 				<StyledRating
 					required
-					value={Number(animalData.animalBehavior)}
+					value={Number(animalData.animalBehavior) || 0}
 					onChange={handleChange}
 					name="animalBehavior"
 					precision={0.5}
@@ -365,14 +369,23 @@ export const AddPetForm = () => {
 				</label>
 				<StyledRating
 					required
-					value={Number(animalData.humanBehavior)}
+					value={Number(animalData.humanBehavior) || 0}
 					onChange={handleChange}
 					name="humanBehavior"
 					precision={0.5}
 					icon={<FavoriteIcon fontSize="inherit" />}
 					emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
 				/>
-				<Button variant="outlined" type="submit">
+				<Button
+					variant="contained"
+					color="success"
+					type="submit"
+					sx={{
+						backgroundColor: "#00875a",
+						color: "white",
+						fontFamily: "Lato",
+					}}
+				>
 					{pathName === "/addpet" ? "Add Pet" : "Confirm editing"}
 				</Button>
 			</StyledForm>
