@@ -11,10 +11,12 @@ import { TextField, Rating, Button, touchRippleClasses } from "@mui/material";
 import cat from "../icons/cat.png";
 import { useAllAnimals } from "../utils/useAllAnimals";
 import { useNavigate } from "react-router-dom";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 const StyledWrapper = styled.div`
 	display: flex;
-	margin: 20px 150px;
+	margin: 15px 100px;
+	/* justify-content: space-evenly; */
 	overflow: hidden;
 `;
 
@@ -23,16 +25,32 @@ const StyledForm = styled.form`
 	width: 300px;
 	font-size: 20px;
 	font-family: "Lato", sans-serif;
-
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 10px;
 	.MuiTypography-root {
 		font-size: 20px;
 	}
 	.MuiRating-root {
 		font-size: 50px;
 	}
+	& input {
+		/* outline: none; */
+		/* border: 2px solid #00875a; */
+		border-radius: 5px;
+		height: 5px;
+		background-color: white;
+	}
+
+	/* & button {
+		border: 2px solid #00875a;
+		border-radius: 5px;
+		height: 50px;
+	} */
+`;
+
+const StyledLabel = styled.label`
+	display: inline-block;
 `;
 
 const StyledRating = styled(Rating)({
@@ -46,30 +64,27 @@ const StyledRating = styled(Rating)({
 	},
 });
 
-//zmienic na background image
 const StyledImage = styled.div`
-	width: 100%;
-	height: 100%;
-
+	/* // width: 100%;
+	// height: 100%; */
 	background-image: url(${(props) => props.src});
-	background-position: center;
+	background-position: top;
 	background-size: contain;
 	background-repeat: no-repeat;
 `;
 
 const StyledDivImage = styled.div`
-	width: 100%;
-	height: 100%;
-
-	display: flex;
-	border: 1px solid black;
+	width: 350px;
+	height: 350px;
+	/*// display: flex;*/
+	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
 	border-radius: 5px;
 `;
 
 const EmptyDiv = styled.div`
 	width: 100%;
 	height: 100%;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	background-image: url(${cat});
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -83,7 +98,8 @@ const StyledUpload = styled.div`
 	display: flex;
 	gap: 20px;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
+	font-family: "Lato", sans-serif;
 `;
 
 const StyledFormUpload = styled.form`
@@ -252,19 +268,18 @@ export const AddPetForm = () => {
 					)}
 				</StyledDivImage>
 				<StyledFormUpload ref={formRef}>
-					<input type="file" onChange={formHandler} required />
-					<h3>Uploaded {progress} %</h3>
+					<input type="file" lang="en" onChange={formHandler} required />
+					<h3 style={{ fontSize: "25px" }}>Uploaded {progress} %</h3>
 				</StyledFormUpload>
 			</StyledUpload>
 
 			<StyledForm onSubmit={handleSumbit}>
-				<label htmlFor="id">Animal chip number (15 digits)</label>
+				<StyledLabel htmlFor="id">Animal chip number (15 digits)</StyledLabel>
 				{isEditing ? (
 					isProper ? (
 						<TextField
 							variant="filled"
 							focused
-							label="Filled success"
 							color="success"
 							id="id"
 							placeholder="Enter chip number"
@@ -295,7 +310,6 @@ export const AddPetForm = () => {
 						onChange={handleChip}
 					></TextField>
 				)}
-				{/* //////////////////////////////////////////////////////////////////////////// */}
 				<label htmlFor="name">Name</label>
 				<TextField
 					id="name"
@@ -327,14 +341,17 @@ export const AddPetForm = () => {
 					// required
 				></TextField>
 				<label htmlFor="notes">Notes</label>
-				<textarea
+				<TextareaAutosize
 					id="notes"
+					aria-label="minimum height"
+					minRows={1}
+					style={{ fontSize: "20px" }}
 					placeholder="Add note"
 					value={animalData.notes || ""}
 					type="text"
 					name="notes"
 					onChange={handleChange}
-				></textarea>
+				></TextareaAutosize>
 				<label component="legend" htmlFor="animalBehavior">
 					Behavior around other animals
 				</label>
@@ -359,7 +376,16 @@ export const AddPetForm = () => {
 					icon={<FavoriteIcon fontSize="inherit" />}
 					emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
 				/>
-				<Button variant="outlined" type="submit">
+				<Button
+					variant="contained"
+					color="success"
+					type="submit"
+					sx={{
+						backgroundColor: "#00875a",
+						color: "white",
+						fontFamily: "Lato",
+					}}
+				>
 					{pathName === "/addpet" ? "Add Pet" : "Confirm editing"}
 				</Button>
 			</StyledForm>

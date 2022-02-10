@@ -12,6 +12,7 @@ const StyledCalendar = styled.div`
 	padding: 20px;
 	box-shadow: 0px 0px 6px 0px rgba(66, 68, 90, 1);
 	border-radius: 10px;
+	font-family: "Lato", sans-serif;
 `;
 
 const SCOPES =
