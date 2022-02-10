@@ -7,6 +7,18 @@ const StyledDetails = styled.ul`
 	flex-direction: column;
 	list-style: none;
 	z-index: 0;
+	position: fixed;
+	right: 0;
+	border: 3px solid #00875a;
+	background-color: white;
+	border-radius: 5px;
+	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
+	align-items: center;
+	margin-top: 10px;
+	margin-right: 50px;
+	margin-top: 10%;
+	width: 500px;
+	height: 500px;
 `;
 const StyledNote = styled.div`
 	weight: 100px;

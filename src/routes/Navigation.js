@@ -6,7 +6,7 @@ import "../styles.css";
 const StyledNavigation = styled.div`
 	/* padding: 150px; */
 	height: 100vh;
-	background-color: lightgray;
+	background-color: #efefef;
 	display: grid;
 	grid-template-columns: 0.5fr 0.5fr;
 	grid-template-rows: 0.5fr 0.5fr;
@@ -92,14 +92,14 @@ export const Navigation = () => {
 	return (
 		<StyledNavigation>
 			<StyledAnimalsBar>
-				<NavLink to="/animalslist">
-					<StyledLink>ANIMALS</StyledLink>
+				<NavLink to="/addpet">
+					<StyledLink>ADD PET</StyledLink>
 				</NavLink>
 			</StyledAnimalsBar>
 
 			<StyledCalendarBar>
-				<NavLink to="/calendar">
-					<StyledLink>CALENDAR</StyledLink>
+				<NavLink to="/animalslist">
+					<StyledLink>ANIMALS</StyledLink>
 				</NavLink>
 			</StyledCalendarBar>
 
@@ -109,8 +109,8 @@ export const Navigation = () => {
 				</NavLink>
 			</StyledAdoptedBar>
 			<StyledAddPetBar>
-				<NavLink to="/addpet">
-					<StyledLink>ADD PET</StyledLink>
+				<NavLink to="/calendar">
+					<StyledLink>CALENDAR</StyledLink>
 				</NavLink>
 			</StyledAddPetBar>
 		</StyledNavigation>

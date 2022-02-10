@@ -64,6 +64,7 @@ const StyledText = styled.span`
 	text-indent: 1vw;
 	font-size: 1rem;
 	font-family: "Amatic SC", cursive;
+	font-weight: bold;
 
 	/* z-index: 1; */
 	& a {
@@ -74,7 +75,7 @@ const StyledText = styled.span`
 		font-family: "Amatic SC", cursive;
 	}
 	& a:hover {
-		color: teal;
+		color: #0f573f;
 	}
 `;
 

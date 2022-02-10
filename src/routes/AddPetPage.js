@@ -5,9 +5,7 @@ import { Main } from "../components/Main";
 export const AddPetPage = () => {
 	return (
 		<PageLayout>
-			<Main>
-				<AddPetForm />
-			</Main>
+			<AddPetForm />
 		</PageLayout>
 	);
 };

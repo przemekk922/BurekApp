@@ -37,6 +37,7 @@ const StyledForm = styled.form`
 	margin: 20px;
 	width: 50%;
 	font-size: 20px;
+
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
@@ -63,6 +64,7 @@ const StyledRating = styled(Rating)({
 const StyledImage = styled.div`
 	width: 100%;
 	height: 100%;
+
 	background-image: url(${(props) => props.src});
 	background-position: center;
 	background-size: contain;
@@ -72,6 +74,7 @@ const StyledImage = styled.div`
 const StyledDivImage = styled.div`
 	width: 100%;
 	height: 100%;
+
 	display: flex;
 	border: 1px solid black;
 	border-radius: 5px;
