@@ -16,7 +16,7 @@ const StyledDetails = styled.div`
 	z-index: 0;
 	position: fixed;
 	right: 0;
-	border: 3px solid #00875a;
+
 	background-color: white;
 	border-radius: 8px;
 	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
@@ -79,6 +79,11 @@ const StyledNotesSection = styled.div`
 	box-shadow: 0px 0px 6px 0px rgba(66, 68, 90, 1);
 `;
 
+const StyledLink = styled(NavLink)`
+	text-decoration: none;
+	color: white;
+`;
+
 export const AnimalDetails = ({ animal, animals, animalData }) => {
 	// const [isAdopted, setIsAdopted] = useState(false);
 
@@ -89,6 +94,9 @@ export const AnimalDetails = ({ animal, animals, animalData }) => {
 		} catch (error) {
 			console.log("text:", error);
 		}
+	};
+	const deleteFromList = async () => {
+		await deleteDoc(doc(db, "animals", animal.id));
 	};
 
 	return (
@@ -105,21 +113,19 @@ export const AnimalDetails = ({ animal, animals, animalData }) => {
 					<li>Behavior around humans: {animal.humanBehavior}</li>
 				</StyledDataSection>
 			</StyledTopSection>
-			<StyledNotesSection>
-				<li>Notes: {animal.notes}</li>
-			</StyledNotesSection>
+			<StyledNotesSection>{animal.notes}</StyledNotesSection>
 			<StyledButtonSection>
 				<StyledButton onClick={changeAdoptedStatus}>
 					Add to adopted
 				</StyledButton>
 
 				<StyledButton>
-					<NavLink to={`/editanimaldetails/${animal.id}`}>
+					<StyledLink to={`/editanimaldetails/${animal.id}`}>
 						Update animal details
-					</NavLink>
+					</StyledLink>
 				</StyledButton>
 
-				<StyledButton>Delete from list</StyledButton>
+				<StyledButton onClick={deleteFromList}>Delete from list</StyledButton>
 			</StyledButtonSection>
 		</StyledDetails>
 	);

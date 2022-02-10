@@ -11,7 +11,7 @@ const AnimalListBar = styled.div`
 	/* border: 1px solid #00875a; */
 	background-color: white;
 	border-radius: 5px;
-	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
+	box-shadow: 4px 0px 12px 0px rgba(66, 68, 90, 1);
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 10px;
@@ -23,11 +23,12 @@ const StyledImgBox = styled.div`
 	height: 100%;
 	width: 100px;
 	font-size: 50px;
-	border-right: 2px solid #00875a;
+	/* border-right: 2px solid #00875a; */
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
 	border-radius: 5px 0 0 5px;
+	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
 `;
 const StyledButton = styled.button`
 	height: 60px;
