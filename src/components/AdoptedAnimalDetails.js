@@ -123,7 +123,7 @@ export const AdoptedAnimalDetails = ({ animal, animals, animalData }) => {
 					Restore to animal list
 				</StyledButton>
 				<StyledButton>
-					<StyledLink to={`/editanimaldetails/${animal.id}`}>
+					<StyledLink to={`/editadeoptedanimal/${animal.id}`}>
 						Update animal details
 					</StyledLink>
 				</StyledButton>

@@ -5,12 +5,13 @@ import interactionPlugin from "@fullcalendar/interaction";
 import styled from "styled-components";
 import { useState, useEffect, useRef } from "react";
 import googleCalendarPlugin from "@fullcalendar/google-calendar";
-import { nanoid } from "nanoid";
 
 const StyledCalendar = styled.div`
-	width: 80%;
-	height: 200px;
+	width: 1000px;
 	margin: 50px auto;
+	padding: 20px;
+	box-shadow: 0px 0px 6px 0px rgba(66, 68, 90, 1);
+	border-radius: 10px;
 `;
 
 const SCOPES =
@@ -148,6 +149,10 @@ export const FullCalendarApp = () => {
 					googleCalendarPlugin,
 				]}
 				googleCalendarApiKey={API_KEY}
+				height="auto"
+				// headerToolbar={{
+				// 	center: "dayGridMonth,timeGridWeek,timeGridDay",
+				// }}
 				editable={true}
 				initialView="dayGridMonth"
 				initialView="dayGridMonth"
