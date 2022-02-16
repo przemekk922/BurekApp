@@ -1,4 +1,4 @@
-# Animal shelter managments system - BurekApp
+# Animal shelter managments system - [BurekApp](https://burek-f67fb.web.app/)
 
 ### Index of Contents
 
@@ -8,6 +8,8 @@
 - [Animals List](#animals-list)
 - [Adopted Animals List](#adopted-animals-list)
 - [Calendar](#calendar)
+
+Live demo: [BurekApp](https://burek-f67fb.web.app/)
 
 To log into app and calendar type:
 
