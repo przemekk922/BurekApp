@@ -77,6 +77,7 @@ const StyledNotesSection = styled.div`
 	border: 1px solid black;
 	border-radius: 5px;
 	box-shadow: 0px 0px 6px 0px rgba(66, 68, 90, 1);
+	overflow: auto;
 `;
 
 const StyledLink = styled(NavLink)`
