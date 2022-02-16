@@ -113,10 +113,10 @@ export const FullCalendarApp = () => {
 		}));
 	};
 
-	const [eventDate, setEventDate] = useState("");
+	// const [eventDate, setEventDate] = useState("");
 
-	const handleClick = (e) => {
-		setEventDate(e);
+	const handleClick = (eventDate) => {
+		// setEventDate(e);
 		console.log(eventDate);
 		const nameEvent = prompt("Enter event name");
 		const eventTitle = new String(nameEvent);
