@@ -93,18 +93,6 @@ export const AdoptedAnimalDetails = ({ animal, animals, animalData }) => {
 		await deleteDoc(doc(db, "adopted_animals", animal.id));
 	};
 
-	// const updateAnimalDetails = async () => {
-	// 	await db.collection("animals").doc(animal.id).update({
-	// 		id: newId,
-	// 		name: newName,
-	// 		age: newAge,
-	// 		species: newSpecies,
-	// 		animalBehavior: 0,
-	// 		humanBehavior: 0,
-	// 		imageUrl: "",
-	// 	});
-	// };
-
 	return (
 		<StyledDetails key={animal.id}>
 			<StyledTopSection>

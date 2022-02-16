@@ -16,7 +16,6 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 const StyledWrapper = styled.div`
 	display: flex;
 	margin: 15px 100px;
-	/* justify-content: space-evenly; */
 	overflow: hidden;
 `;
 
@@ -35,18 +34,10 @@ const StyledForm = styled.form`
 		font-size: 50px;
 	}
 	& input {
-		/* outline: none; */
-		/* border: 2px solid #00875a; */
 		border-radius: 5px;
 		height: 5px;
 		background-color: white;
 	}
-
-	/* & button {
-		border: 2px solid #00875a;
-		border-radius: 5px;
-		height: 50px;
-	} */
 `;
 
 const StyledLabel = styled.label`
@@ -76,7 +67,6 @@ const StyledImage = styled.div`
 const StyledDivImage = styled.div`
 	width: 350px;
 	height: 350px;
-	/*// display: flex;*/
 	box-shadow: 0px 0px 12px 0px rgba(66, 68, 90, 1);
 	border-radius: 5px;
 `;
@@ -84,7 +74,6 @@ const StyledDivImage = styled.div`
 const EmptyDiv = styled.div`
 	width: 100%;
 	height: 100%;
-	/* border: 1px solid black; */
 	background-image: url(${cat});
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -318,7 +307,6 @@ export const AddPetForm = () => {
 					type="text"
 					name="name"
 					onChange={handleChange}
-					// required
 				></TextField>
 				<label htmlFor="age">Age</label>
 				<TextField
@@ -328,7 +316,6 @@ export const AddPetForm = () => {
 					type="text"
 					name="age"
 					onChange={handleChange}
-					// required
 				></TextField>
 				<label htmlFor="species">Species</label>
 				<TextField
@@ -338,7 +325,6 @@ export const AddPetForm = () => {
 					type="text"
 					name="species"
 					onChange={handleChange}
-					// required
 				></TextField>
 				<label htmlFor="notes">Notes</label>
 				<TextareaAutosize
