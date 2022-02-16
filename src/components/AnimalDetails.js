@@ -6,7 +6,6 @@ import { setDoc, doc, deleteDoc } from "firebase/firestore";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const slideInRightAnimation = keyframes`${slideInLeft}`;
-// const slideOutRightAnimation = keyframes`${slideOutRight}`;
 
 const StyledDetails = styled.div`
 	display: flex;
@@ -86,8 +85,6 @@ const StyledLink = styled(NavLink)`
 `;
 
 export const AnimalDetails = ({ animal, animals, animalData }) => {
-	// const [isAdopted, setIsAdopted] = useState(false);
-
 	const changeAdoptedStatus = async () => {
 		try {
 			await setDoc(doc(db, "adopted_animals", animal.id), animal);

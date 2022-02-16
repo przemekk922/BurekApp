@@ -38,7 +38,6 @@ const StyledLoginForm = styled.form`
 `;
 const StyledHeader = styled.h1`
 	margin-bottom: 7vh;
-	/* font-family: "Short Stack", cursive; */
 	font-family: "Amatic SC", cursive;
 	font-size: 50px;
 	color: #e06648;
@@ -52,10 +51,10 @@ const StyledFooter = styled.footer`
 	height: 10vh;
 	width: 100%;
 	background-color: #e06648;
-	/* background-color: coral; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 `;
 
 const StyledText = styled.span`
@@ -65,7 +64,6 @@ const StyledText = styled.span`
 	font-family: "Amatic SC", cursive;
 	font-weight: bold;
 
-	/* z-index: 1; */
 	& a {
 		text-decoration: none;
 		color: white;
@@ -76,6 +74,17 @@ const StyledText = styled.span`
 	& a:hover {
 		color: #0f573f;
 	}
+`;
+const StyledLogin = styled.div`
+	padding: 15px;
+	position: absolute;
+	bottom: 100px;
+	left: 40px;
+	border: 2px solid #e06648;
+	border-radius: 10px;
+	font-family: "Short Stack", cursive;
+	background-color: #d3d3d3;
+	line-height: 2rem;
 `;
 
 export const LoginPage = () => {
@@ -122,6 +131,10 @@ export const LoginPage = () => {
 				</StyledLoginForm>
 			</Main>
 			<StyledFooter>
+				<StyledLogin>
+					<p>LOGIN: burekApp@gmail.com</p>
+					<p>PASSWORD: burekApp!23</p>
+				</StyledLogin>
 				<StyledText>
 					Created by:
 					<a href="https://github.com/przemekk922" target="_blank">

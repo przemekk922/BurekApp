@@ -4,19 +4,12 @@ import styled from "styled-components";
 import "../styles.css";
 
 const StyledNavigation = styled.div`
-	/* padding: 150px; */
 	height: 100vh;
 	background-color: #efefef;
 	display: grid;
 	grid-template-columns: 0.5fr 0.5fr;
 	grid-template-rows: 0.5fr 0.5fr;
 
-	/* margin: 10% auto; */
-
-	/* grid-gap: 200px; */
-	/* grid-template-areas:
-		"animals" "calendar"
-		"adopted" "addpet"; */
 	& :hover {
 		font-size: 6.5vh;
 		transition: all 0.5s ease-in-out;
@@ -31,8 +24,6 @@ const StyledAnimalsBar = styled.div`
 	margin-left: 50%;
 	margin-top: 10%;
 	background-color: #00875a;
-	/* grid-area: animals; */
-	/* justify-content: center;*/
 	align-self: center;
 	justify-self: center;
 	box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
@@ -56,7 +47,6 @@ const StyledCalendarBar = styled.div`
 	margin-right: 50%;
 	margin-top: 10%;
 	background-color: #e06648;
-	/* grid-area: calendar; */
 	align-self: center;
 	justify-self: center;
 	box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
@@ -69,7 +59,6 @@ const StyledAdoptedBar = styled.div`
 	margin-bottom: 10%;
 	margin-top: 15%;
 	background-color: #e06648;
-	/* grid-area: adopted; */
 	align-self: center;
 	justify-self: center;
 	box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);
@@ -82,7 +71,6 @@ const StyledAddPetBar = styled.div`
 	margin-bottom: 10%;
 	margin-top: 15%;
 	background-color: #00875a;
-	/* grid-area: addpet; */
 	align-self: center;
 	justify-self: center;
 	box-shadow: 0px 0px 24px 0px rgba(66, 68, 90, 1);

@@ -9,7 +9,6 @@
 - [Adopted Animals List](#adopted-animals-list)
 - [Calendar](#calendar)
 
-ADRES STRONY
 To log into app and calendar type:
 
 - login: burekApp@gmail.com
@@ -31,8 +30,6 @@ There are two dedicated databases that contain information and photos of animals
 
 Thanks to the integration with the Google calendar, the user can view current events. This function has been configured by synchronizing with the Google calendar API.
 
-**_picture_**
-
 ### Add Pet Form
 
 The panel allows you to add animals to the database.
@@ -45,13 +42,13 @@ Thanks to the clear graphic form, you can easily evaluate the animal's behavior.
 
 The list of animals in the shelter shows graphically the data that is added via the Add Pet tab. The bars on the label allow the user to instantly add pet to adopted list, edit an existing record and remove it from the database.
 
-**_picture_**
+<img src="./public/Screenshot 2022-02-11 at 10.39.23.png" />
 
 ### Adopted Animals List
 
 In the details of adopted animals, you will find a button that will allow you to return the animal to the list of animals in the shelter.The details of animals also include a button for adding an animal to the list of adopted animals.
 
-**_picture_**
+<img src="./public/Screenshot 2022-02-11 at 10.40.30.png" />
 
 From both panels you can also edit the animal's card, add notes.
 

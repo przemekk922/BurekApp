@@ -12,15 +12,8 @@ export const Calendar = () => {
 		flex-direction: column;
 	`;
 
-	// const StyledCalendar = styled.div`
-	// 	width: 350px;
-	// 	height: 350px;
-	// 	background-color: grey;
-	// `;
-
 	return (
 		<PageLayout>
-			{/* <StyledNavigation>	</StyledNavigation> */}
 			<FullCalendarApp />
 
 			<NavLink to="/navigation"></NavLink>

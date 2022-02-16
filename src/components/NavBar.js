@@ -18,35 +18,13 @@ const StyledNavBar = styled.nav`
 
 const StyledP = styled.p`
 	color: ${(props) => (props.isActive ? "#0f573f" : "white")};
-	/* border-bottom: ${(props) =>
-		props.isActive ? "2px solid white" : "2px solid transparent"}; */
-		
 	padding: 25px;
 	text-decoration: none;
 	font-size: 30px;
 	font-weight: bold;
 	text-justify: center;
 	text-align: center;
-	position: relative;s
-	/* &:hover {
-		font-size: 35px;
-	} */
-	/* &::after {
-		content: " ";
-		display: flex;
-		background: white;
-		position: absolute;
-		width: 0;
-		height: 6px;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		transition: 300ms width;
-		justify-content: center;
-	}
-	&:hover::after {
-		width: 100%;
-	} */
+	position: relative;
 `;
 
 const StyledLink = styled(NavLink)`

@@ -8,7 +8,6 @@ const AnimalListBar = styled.div`
 	display: flex;
 	width: 800px;
 	height: 100px;
-	/* border: 1px solid #00875a; */
 	background-color: white;
 	border-radius: 5px;
 	box-shadow: 4px 0px 12px 0px rgba(66, 68, 90, 1);
@@ -23,7 +22,6 @@ const StyledImgBox = styled.div`
 	height: 100%;
 	width: 100px;
 	font-size: 50px;
-	/* border-right: 2px solid #00875a; */
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
