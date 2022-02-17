@@ -1,5 +1,12 @@
 # Animal shelter managments system - [BurekApp](https://burek-f67fb.web.app/)
 
+Live demo: [BurekApp](https://burek-f67fb.web.app/)
+
+To log into app and calendar type:
+
+- login: burekApp@gmail.com
+- password: burekApp!23
+
 ### Index of Contents
 
 - [Introduction](#introduction)
@@ -8,13 +15,6 @@
 - [Animals List](#animals-list)
 - [Adopted Animals List](#adopted-animals-list)
 - [Calendar](#calendar)
-
-Live demo: [BurekApp](https://burek-f67fb.web.app/)
-
-To log into app and calendar type:
-
-- login: burekApp@gmail.com
-- password: burekApp!23
 
 ### Introduction
 
